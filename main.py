@@ -4,6 +4,7 @@ import os
 from grid import draw_grid
 from block import Block
 from shape import Shape
+from shapes import Shapes
 
 
 def __main__() -> None:
@@ -33,12 +34,8 @@ def __main__() -> None:
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
 
     # make block
-    my_block = Block(100, 100, 100, r_block_img)
-    test = Shape(
-        [
-            [my_block, my_block.copy(200, 100)],
-        ]
-    )
+    my_block = Block(200, 200, cell_size, r_block_img)
+    test = Shape(my_block, Shapes.TWOBYTWO)
 
     # main game loop
     game_over = False
