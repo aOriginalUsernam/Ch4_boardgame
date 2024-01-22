@@ -41,28 +41,37 @@ def __main__() -> None:
 
     # main game loop
     game_over = False
+    is_dragging_shape = False
     while True:
         try:
             if game_over:
                 raise SystemExit
 
             # player input
+            if is_dragging_shape:
+                x, y = pygame.mouse.get_pos()
+                test.move(x, y)
             for event in pygame.event.get():
                 match event.type:
                     case pygame.QUIT:
                         raise SystemExit
                     case pygame.MOUSEBUTTONUP:
                         # what to do when mouse up
-                        pass
+                        is_dragging_shape = False
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
-                        pass
+                        x, y = pygame.mouse.get_pos()
+                        for item in test.sprites():
+                            if item.rect.collidepoint(x, y):
+                                is_dragging_shape = True
+                                break
                     case pygame.KEYDOWN:
                         match event.key:
                             case pygame.K_ESCAPE:
                                 raise SystemExit
 
             # update screen
+            draw_grid(screen, cell_size, width_and_height, margin)
             test.draw(screen)
             pygame.display.flip()
             clock.tick(60)
