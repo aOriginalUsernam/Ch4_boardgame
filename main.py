@@ -1,14 +1,21 @@
 import pygame
 import pyautogui
 import os
+from grid import draw_grid
 
 
 def __main__() -> None:
+    width, height = 700, 600
+    grid_size = 7
+    cell_size = width // grid_size
+    
     pygame.init()
+
 
     # make full screen
     full_screen_size = pyautogui.size()
-    screen = pygame.display.set_mode(full_screen_size)
+    screen = pygame.display.set_mode((width, height))
+    draw_grid(screen, cell_size, grid_size)
 
     # make header
     pygame.display.set_caption("boardgame")
@@ -20,6 +27,7 @@ def __main__() -> None:
     # make mouse
     curs = pygame.Cursor()
     pygame.mouse.set_cursor(curs)
+
 
     # main game loop
     game_over = False
@@ -47,6 +55,7 @@ def __main__() -> None:
             # update screen
             pygame.display.flip()
             clock.tick(60)
+            
         except SystemExit:
             pygame.quit()
             break
