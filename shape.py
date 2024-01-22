@@ -33,5 +33,30 @@ class Shape(pygame.sprite.Group):
                     [block.copy(x, y), block.copy(width + x, y)],
                     [block.copy(x, y + width), block.copy(x + width, y + width)],
                 ]
+            case Shapes.ONEBYTWO:
+                return [
+                    [block.copy(x, width + y)],
+                    [block.copy(x, y)],
+                ]
+            case Shapes.S_BLOCK:
+                return [
+                    [block.copy(x, y), block.copy(width + x, y)],
+                    [block.copy(width + x, y - width), block.copy(2*width + x, y - width)],
+                ]
+            case Shapes.Z_BLOCK:
+                return [
+                    [block.copy(x, y), block.copy(width + x, y)],
+                    [block.copy(width + x, y + width), block.copy(2*width + x, y + width)],
+                ]
+            case Shapes.I_BLOCK_LYING:
+                return [
+                    [block.copy(x, y), block.copy(width + x, y)],
+                    [block.copy(2*width + x, y), block.copy(3*width + x, y)],
+                    ]
+            case Shapes.I_BLOCK_STANDING:
+                return [
+                    [block.copy(x, y), block.copy(x, y - width)],
+                    [block.copy(x, y - 2*width), block.copy(x, y - 3*width)],
+                ]
             case _:
                 raise ValueError(Shapes)

@@ -9,7 +9,7 @@ from shapes import Shapes
 
 def __main__() -> None:
     margin = 230
-    width_and_height = 5  # int(input("Board size: "))
+    width_and_height = 10  # int(input("Board size: "))
     cell_size = 50
     width = width_and_height * cell_size + 2 * margin
     height = width_and_height * cell_size + 2 * margin
@@ -37,7 +37,7 @@ def __main__() -> None:
 
     # make block
     my_block = Block(200, 200, cell_size, r_block_img)
-    test = Shape(my_block, Shapes.TWOBYTWO)
+    test = Shape(my_block, Shapes.S_BLOCK)
 
     # main game loop
     game_over = False
