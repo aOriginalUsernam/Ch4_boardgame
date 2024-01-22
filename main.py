@@ -17,6 +17,10 @@ def __main__() -> None:
 
     clock = pygame.time.Clock()
 
+    # make mouse
+    curs = pygame.Cursor()
+    pygame.mouse.set_cursor(curs)
+
     # main game loop
     game_over = False
     while True:
@@ -29,12 +33,16 @@ def __main__() -> None:
                 match event.type:
                     case pygame.QUIT:
                         raise SystemExit
+                    case pygame.MOUSEBUTTONUP:
+                        # what to do when mouse up
+                        pass
+                    case pygame.MOUSEBUTTONDOWN:
+                        # what to do when mouse down
+                        pass
                     case pygame.KEYDOWN:
-                        # what to do when a key down
-                        pass
-                    case pygame.KEYUP:
-                        # what to do when a key up
-                        pass
+                        match event.key:
+                            case pygame.K_ESCAPE:
+                                raise SystemExit
 
             # update screen
             pygame.display.flip()
@@ -42,3 +50,7 @@ def __main__() -> None:
         except SystemExit:
             pygame.quit()
             break
+
+
+if __name__ == "__main__":
+    __main__()
