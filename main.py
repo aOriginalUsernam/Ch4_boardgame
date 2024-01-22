@@ -8,16 +8,18 @@ from shapes import Shapes
 
 
 def __main__() -> None:
-    width, height = 700, 600
-    grid_size = 7
-    cell_size = width // grid_size
+    margin = 230
+    width_and_height = 5  # int(input("Board size: "))
+    cell_size = 50
+    width = width_and_height * cell_size + 2 * margin
+    height = width_and_height * cell_size + 2 * margin
 
     pygame.init()
 
     # make full screen
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode((width, height))
-    draw_grid(screen, cell_size, grid_size)
+    draw_grid(screen, cell_size, width_and_height, margin)
 
     # make header
     pygame.display.set_caption("boardgame")
