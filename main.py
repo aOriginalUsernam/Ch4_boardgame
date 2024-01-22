@@ -7,16 +7,20 @@ from shape import Shape
 
 
 def __main__() -> None:
-    width, height = 700, 600
-    grid_size = 7
-    cell_size = width // grid_size
+    margin = 230
+    width_and_height = 5 #int(input("Board size: "))
+    cell_size = 50
+    width = width_and_height * cell_size + 2 * margin
+    height = width_and_height * cell_size + 2 * margin
+
+
 
     pygame.init()
 
     # make full screen
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode((width, height))
-    draw_grid(screen, cell_size, grid_size)
+    draw_grid(screen, cell_size, width_and_height, margin)
 
     # make header
     pygame.display.set_caption("boardgame")
@@ -33,7 +37,7 @@ def __main__() -> None:
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
 
     # make block
-    my_block = Block(100, 100, 100, r_block_img)
+    my_block = Block(100, 100, cell_size, r_block_img)
     test = Shape(
         [
             [my_block, my_block.copy(200, 100)],
