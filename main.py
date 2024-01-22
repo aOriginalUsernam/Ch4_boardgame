@@ -1,6 +1,8 @@
 import pygame
 import pyautogui
 import os
+from block import Block
+from shape import Shape
 
 
 def __main__() -> None:
@@ -20,6 +22,17 @@ def __main__() -> None:
     # make mouse
     curs = pygame.Cursor()
     pygame.mouse.set_cursor(curs)
+
+    # load block image
+    r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
+
+    # make block
+    my_block = Block(100, 100, 100, r_block_img)
+    test = Shape(
+        [
+            [my_block, my_block.copy(200, 100)],
+        ]
+    )
 
     # main game loop
     game_over = False
@@ -45,6 +58,7 @@ def __main__() -> None:
                                 raise SystemExit
 
             # update screen
+            test.draw(screen)
             pygame.display.flip()
             clock.tick(60)
         except SystemExit:
