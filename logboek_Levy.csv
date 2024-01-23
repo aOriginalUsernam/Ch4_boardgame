@@ -1,5 +1,6 @@
 date,activity,time_spent,details
-22-01-2024, discord meeting, 0.5h, met jelle overlegd wat we gaan doen en wie wat gaat doen
+22-01-2024,discord meeting, 0.5h, met jelle overlegd wat we gaan doen en wie wat gaat doen
 22-01-2024,studeren pygame,2h,ik heb mezelf bekend gemaakt met pygame door wat belangrijke pygame functies te leren
-22-01-2024,coderen, 3h, ik heb aan de grid gewerkt waar de vormpjes in gaan
-22-01-2024,coderen, 1h, ik heb een paar shapes gemaakt
+22-01-2024,coderen,3h,ik heb aan de grid gewerkt waar de vormpjes in gaan
+22-01-2024,coderen,1h,ik heb een paar shapes gemaakt
+23-01-2024,coderen,3h,gewerkt aan grid snap zodat de vorm perfect in het vierkant gaat. en de is_valid functie gemaakt die ervoor zorgt dat een vormp niet buiten de grid kan gaan
