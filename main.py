@@ -3,6 +3,7 @@ import pyautogui
 import os
 from grid import *
 from block import Block
+
 from shape import Shape
 from shapes import Shapes
 from shapeHandler import ShapeHandler
@@ -66,10 +67,11 @@ def __main__() -> None:
                         is_dragging_shape = False
                         for item in shape.sprites():
                             if item.rect.collidepoint(x, y):
-                                closest_grid_x_and_y = closest_grid(cell_centers, x, y)
+                                closest_grid_x_and_y, closest_index = closest_grid(
+                                    cell_centers, x, y
+                                )
                                 x, y = closest_grid_x_and_y
-                        shape.move(x, y)
-                        shape.is_placed = True
+                                shape.move(x, y)
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()
