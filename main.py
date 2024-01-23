@@ -5,6 +5,7 @@ from grid import *
 from block import Block
 from shape import Shape
 from shapes import Shapes
+import random
 
 
 def __main__() -> None:
