@@ -14,6 +14,7 @@ class Shape(pygame.sprite.Group):
                 if sprite is not None:
                     list_1d.append(sprite)
         pygame.sprite.Group.__init__(self, list_1d)
+        self.is_placed = False
 
     def create_shape(self, block: Block):
         x = block.rect.x
@@ -77,7 +78,9 @@ class Shape(pygame.sprite.Group):
             case _:
                 raise ValueError(Shapes)
 
-    def move(self, x: int, y: int):
+    def move(self, x: int, y: int) -> None:
+        if self.is_placed:
+            return
         add_y = 0
         for row in self.list_2d:
             add_x = 0

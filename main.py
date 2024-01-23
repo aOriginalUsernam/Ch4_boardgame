@@ -5,6 +5,7 @@ from grid import *
 from block import Block
 from shape import Shape
 from shapes import Shapes
+from shapeHandler import ShapeHandler
 import random
 
 
@@ -36,37 +37,43 @@ def __main__() -> None:
     # load block image
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
 
-    # make block
-    my_block = Block(200, 200, cell_size - 0.5, r_block_img)
-    test = Shape(my_block, Shapes.Z_BLOCK)
+    # make block + shape handler
+    red_block = Block(200, 200, cell_size - 0.5, r_block_img)
+    shape_handler = ShapeHandler()
+    shape = shape_handler.generate_shape(red_block)
 
     # main game loop
     game_over = False
     is_dragging_shape = False
     while True:
         try:
+            # if shape is placed generate new shape
+            if shape.is_placed:
+                shape = shape_handler.generate_shape(red_block)
+
             if game_over:
                 raise SystemExit
 
             # player input
             if is_dragging_shape:
                 x, y = pygame.mouse.get_pos()
-                test.move(x, y)
+                shape.move(x, y)
             for event in pygame.event.get():
                 match event.type:
                     case pygame.QUIT:
                         raise SystemExit
                     case pygame.MOUSEBUTTONUP:
                         is_dragging_shape = False
-                        for item in test.sprites():
+                        for item in shape.sprites():
                             if item.rect.collidepoint(x, y):
                                 closest_grid_x_and_y = closest_grid(cell_centers, x, y)
                                 x, y = closest_grid_x_and_y
-                                test.move(x, y)
+                        shape.move(x, y)
+                        shape.is_placed = True
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()
-                        for item in test.sprites():
+                        for item in shape.sprites():
                             if item.rect.collidepoint(x, y):
                                 is_dragging_shape = True
                                 break
@@ -77,7 +84,7 @@ def __main__() -> None:
 
             # update screen
             draw_grid(screen, cell_size, width_and_height, margin)
-            test.draw(screen)
+            shape_handler.draw_shapes(screen)
             pygame.display.flip()
             clock.tick(60)
 
