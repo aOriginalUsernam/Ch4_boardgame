@@ -34,4 +34,4 @@ def closest_grid(cell_centers, mouse_x, mouse_y):
     distances = [((mouse_x - x)**2 + (mouse_y - y)**2)**0.5 for x, y in cell_centers]
     closest_index = distances.index(min(distances))
 
-    return cell_centers[closest_index]
+    return cell_centers[closest_index], closest_index

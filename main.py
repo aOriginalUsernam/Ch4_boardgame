@@ -37,7 +37,7 @@ def __main__() -> None:
 
     # make block
     my_block = Block(200, 200, cell_size - 0.5, r_block_img)
-    test = Shape(my_block, Shapes.Z_BLOCK)
+    shape = Shape(my_block, Shapes.Z_BLOCK)
 
     # main game loop
     game_over = False
@@ -50,22 +50,26 @@ def __main__() -> None:
             # player input
             if is_dragging_shape:
                 x, y = pygame.mouse.get_pos()
-                test.move(x, y)
+                shape.move(x, y)
             for event in pygame.event.get():
                 match event.type:
                     case pygame.QUIT:
                         raise SystemExit
                     case pygame.MOUSEBUTTONUP:
                         is_dragging_shape = False
-                        for item in test.sprites():
+                        for item in shape.sprites():
                             if item.rect.collidepoint(x, y):
-                                closest_grid_x_and_y = closest_grid(cell_centers, x, y)
+                                closest_grid_x_and_y, closest_index = closest_grid(cell_centers, x, y)
+                                if shape.shape == Shapes.Z_BLOCK:
+                                    print("hi")
+
                                 x, y = closest_grid_x_and_y
-                                test.move(x, y)
+                                shape.move(x, y)
+
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()
-                        for item in test.sprites():
+                        for item in shape.sprites():
                             if item.rect.collidepoint(x, y):
                                 is_dragging_shape = True
                                 break
@@ -76,7 +80,7 @@ def __main__() -> None:
 
             # update screen
             draw_grid(screen, cell_size, width_and_height, margin)
-            test.draw(screen)
+            shape.draw(screen)
             pygame.display.flip()
             clock.tick(60)
 
