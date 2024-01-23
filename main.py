@@ -72,6 +72,7 @@ def __main__() -> None:
                                 )
                                 x, y = closest_grid_x_and_y
                                 shape.move(x, y)
+                                shape.is_placed = True
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()
