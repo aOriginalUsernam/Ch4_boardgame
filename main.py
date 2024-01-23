@@ -3,6 +3,7 @@ import pyautogui
 import os
 from grid import *
 from block import Block
+
 from shape import Shape
 from shapes import Shapes
 import random
@@ -38,7 +39,7 @@ def __main__() -> None:
 
     # make block
     my_block = Block(200, 200, cell_size - 0.5, r_block_img)
-    shape = Shape(my_block, Shapes.Z_BLOCK)
+    shape = Shape(my_block, Shapes.S_BLOCK)
 
     # main game loop
     game_over = False
@@ -61,11 +62,11 @@ def __main__() -> None:
                         for item in shape.sprites():
                             if item.rect.collidepoint(x, y):
                                 closest_grid_x_and_y, closest_index = closest_grid(cell_centers, x, y)
-                                if shape.shape == Shapes.Z_BLOCK:
-                                    print("hi")
-
                                 x, y = closest_grid_x_and_y
-                                shape.move(x, y)
+                                is_valid = shape.check_is_valid_pos(x, y, shape.shape, width_and_height, cell_size)
+
+                                if is_valid:
+                                    shape.move(x, y)
 
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
