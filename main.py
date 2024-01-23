@@ -1,7 +1,7 @@
 import pygame
 import pyautogui
 import os
-from grid import draw_grid
+from grid import *
 from block import Block
 from shape import Shape
 from shapes import Shapes
@@ -19,7 +19,7 @@ def __main__() -> None:
     # make full screen
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode((width, height))
-    draw_grid(screen, cell_size, width_and_height, margin)
+    cell_centers = draw_grid(screen, cell_size, width_and_height, margin)
 
     # make header
     pygame.display.set_caption("boardgame")
@@ -36,8 +36,8 @@ def __main__() -> None:
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
 
     # make block
-    my_block = Block(200, 200, cell_size, r_block_img)
-    test = Shape(my_block, Shapes.S_BLOCK)
+    my_block = Block(200, 200, cell_size - 0.5, r_block_img)
+    test = Shape(my_block, Shapes.Z_BLOCK)
 
     # main game loop
     game_over = False
@@ -56,8 +56,12 @@ def __main__() -> None:
                     case pygame.QUIT:
                         raise SystemExit
                     case pygame.MOUSEBUTTONUP:
-                        # what to do when mouse up
                         is_dragging_shape = False
+                        for item in test.sprites():
+                            if item.rect.collidepoint(x, y):
+                                closest_grid_x_and_y = closest_grid(cell_centers, x, y)
+                                x, y = closest_grid_x_and_y
+                                test.move(x, y)
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()

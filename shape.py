@@ -1,6 +1,7 @@
 from block import Block
 import pygame
 from shapes import Shapes
+from grid import *
 
 
 class Shape(pygame.sprite.Group):
