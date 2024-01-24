@@ -89,33 +89,7 @@ class Shape(pygame.sprite.Group):
                 add_x += 1
             add_y += 1
 
-    def check_is_valid_pos(self, x, y, shape, width_and_height, cell_size): # niet vergeten indexes anders te schrijven later want als je een groter bord opgeeft werkt het niet
-        closest_index = 0
-        match shape:
-            case Shapes.ONEBYONE:
-                return True
-
-            case Shapes.TWOBYONE:
-                return not x >= 205 + width_and_height * cell_size
-            
-            case Shapes.TWOBYTWO:
-                return not (x >= 205 + width_and_height * cell_size or y >= 205 + width_and_height * cell_size)
-
-            case Shapes.ONEBYTWO:
-                return not y >= 205 + width_and_height * cell_size
-
-            case Shapes.S_BLOCK:
-                return not (x >= 205 + width_and_height * cell_size - cell_size or y >= 205 + width_and_height * cell_size)
-
-            case Shapes.Z_BLOCK:
-                return not (x >= 205 + width_and_height * cell_size - cell_size or y >= 205 + width_and_height * cell_size)
-
-            case Shapes.I_BLOCK_LYING:
-                return not (x >= 205 + width_and_height * cell_size - 2*cell_size)
-            
-            case Shapes.I_BLOCK_STANDING:
-                return not (y >= 205 + width_and_height * cell_size - 2*cell_size)
-            
+    
             
             
             # elif shape == Shapes.S_BLOCK and closest_index in (90,91,92,93,94,95,96,97,8,18,28,38,48,58,68,78,88,98,9,19,29,39,49,59,69,79,89,99):
@@ -123,4 +97,3 @@ class Shape(pygame.sprite.Group):
             
             # elif shape == Shapes.Z_BLOCK and x >= width_and_height * cell_size + 3*cell_size or y == 255 + width_and_height * cell_size - cell_size:
             #     return False
-        return True

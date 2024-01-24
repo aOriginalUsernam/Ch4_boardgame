@@ -96,11 +96,8 @@ def __main__() -> None:
                                 closest_grid_x_and_y, closest_index = closest_grid(
                                     cell_centers, x, y
                                 )
-                                print(closest_index)
                                 x, y = closest_grid_x_and_y
-                                is_valid = shape.check_is_valid_pos(
-                                    x, y, shape.shape, width_and_height, cell_size
-                                )
+                                is_valid = shape_handler.check_is_valid_pos(x, y, shape.shape, width_and_height, cell_size, closest_index)
                                 if is_valid:
                                     shape.move(x, y)
                                     shape.is_placed = True
