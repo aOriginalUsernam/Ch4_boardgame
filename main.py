@@ -19,7 +19,7 @@ def __main__() -> None:
 
     pygame.init()
 
-    # make full screen
+    # make grid
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode((width, height))
     cell_centers = draw_grid(screen, cell_size, width_and_height, margin)
@@ -35,25 +35,40 @@ def __main__() -> None:
     curs = pygame.Cursor()
     pygame.mouse.set_cursor(curs)
 
+    # MAKE PLAYER BOARD
+    p1_board = pygame.Rect(0, 0, margin, height)
+    p2_board = pygame.Rect(width - margin, 0, margin, height)
+    col = pygame.Color(10, 10, 10)
+
     # load block image
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
+    g_block_img = pygame.image.load(
+        os.path.join(os.getcwd(), "images\\block_green.png")
+    )
 
     # make block + shape handler
     red_block = Block(200, 200, cell_size - 0.5, r_block_img)
+    green_block = Block(width - 200, 200, cell_size - 0.5, g_block_img)
     shape_handler = ShapeHandler()
     shape = shape_handler.generate_shape(red_block)
 
     # main game loop
     game_over = False
     is_dragging_shape = False
+    is_player_1 = True
     while True:
         try:
-            # if shape is placed generate new shape
-            if shape.is_placed:
-                shape = shape_handler.generate_shape(red_block)
-
             if game_over:
                 raise SystemExit
+
+            # if shape is placed generate new shape
+            if shape.is_placed:
+                if is_player_1:
+                    shape = shape_handler.generate_shape(green_block)
+                    is_player_1 = False
+                else:
+                    shape = shape_handler.generate_shape(red_block)
+                    is_player_1 = True
 
             # player input
             if is_dragging_shape:
@@ -66,13 +81,15 @@ def __main__() -> None:
                     case pygame.MOUSEBUTTONUP:
                         is_dragging_shape = False
                         for item in shape.sprites():
-                            if item.rect.collidepoint(x, y) or shape.shape == Shapes.S_BLOCK:
+                            if (
+                                item.rect.collidepoint(x, y)
+                                or shape.shape == Shapes.S_BLOCK
+                            ):
                                 closest_grid_x_and_y, closest_index = closest_grid(
                                     cell_centers, x, y
                                 )
                                 x, y = closest_grid_x_and_y
                                 is_valid = shape_handler.check_is_valid_pos(x, y, shape.shape, width_and_height, cell_size, closest_index)
-                                print(shape_handler.covered_cells)
                                 if is_valid:
                                     shape.move(x, y)
                                     shape.is_placed = True
@@ -90,7 +107,10 @@ def __main__() -> None:
 
             # update screen
             draw_grid(screen, cell_size, width_and_height, margin)
+            pygame.draw.rect(screen, col, p1_board)
+            pygame.draw.rect(screen, col, p2_board)
             shape_handler.draw_shapes(screen)
+
             pygame.display.flip()
             clock.tick(60)
 
