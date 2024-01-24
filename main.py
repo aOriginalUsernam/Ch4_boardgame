@@ -66,13 +66,16 @@ def __main__() -> None:
                     case pygame.MOUSEBUTTONUP:
                         is_dragging_shape = False
                         for item in shape.sprites():
-                            if item.rect.collidepoint(x, y):
+                            if item.rect.collidepoint(x, y) or shape.shape == Shapes.S_BLOCK:
                                 closest_grid_x_and_y, closest_index = closest_grid(
                                     cell_centers, x, y
                                 )
+                                print(closest_index)
                                 x, y = closest_grid_x_and_y
-                                shape.move(x, y)
-                                shape.is_placed = True
+                                is_valid = shape.check_is_valid_pos(x, y, shape.shape, width_and_height, cell_size)
+                                if is_valid:
+                                    shape.move(x, y)
+                                    shape.is_placed = True
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()

@@ -12,6 +12,7 @@ class ShapeHandler:
 
     def generate_shape(self, block: Block) -> Shape:
         toReturn = Shape(block, Shapes(random.randint(0, 7)))
+        # toReturn = Shape(block, Shapes.I_BLOCK_STANDING)
         self.all_shapes.append(toReturn)
         self.current_shape += 1
         return toReturn
