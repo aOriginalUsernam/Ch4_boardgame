@@ -7,6 +7,7 @@ from grid import *
 class Shape(pygame.sprite.Group):
     def __init__(self, block: Block, shape: Shapes) -> None:
         self.shape = shape
+        self.block = block
         self.list_2d = self.create_shape(block)
         list_1d = []
         for row in self.list_2d:
@@ -43,7 +44,7 @@ class Shape(pygame.sprite.Group):
                 ]
             case Shapes.S_BLOCK:
                 return [
-                    [None, block.copy(width + x , y), block.copy(width*2 + x, y)],
+                    [None, block.copy(width + x, y), block.copy(width * 2 + x, y)],
                     [
                         block.copy(width + x, y + width),
                         block.copy(x, y + width),
@@ -89,11 +90,8 @@ class Shape(pygame.sprite.Group):
                 add_x += 1
             add_y += 1
 
-    
-            
-            
             # elif shape == Shapes.S_BLOCK and closest_index in (90,91,92,93,94,95,96,97,8,18,28,38,48,58,68,78,88,98,9,19,29,39,49,59,69,79,89,99):
             #     return False
-            
+
             # elif shape == Shapes.Z_BLOCK and x >= width_and_height * cell_size + 3*cell_size or y == 255 + width_and_height * cell_size - cell_size:
             #     return False
