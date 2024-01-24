@@ -7,13 +7,14 @@ from block import Block
 from shape import Shape
 from shapes import Shapes
 from shapeHandler import ShapeHandler
-from text import Timer
+from text import Timer, Button, Points
 import random
+from menu import *
 
 
 def __main__() -> None:
     margin = 230
-    width_and_height = 10  # int(input("Board size: "))
+    width_and_height = 8  # int(input("Board size: "))
     cell_size = 50
     width = width_and_height * cell_size + 2 * margin
     height = width_and_height * cell_size + 2 * margin
@@ -23,14 +24,15 @@ def __main__() -> None:
     # make grid
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode((width, height))
+    clock = pygame.time.Clock()
+    start_screen(clock, screen)
+
     cell_centers = draw_grid(screen, cell_size, width_and_height, margin)
 
     # make header
     pygame.display.set_caption("boardgame")
     icon = pygame.image.load(os.path.join(os.getcwd(), "images/siep.jpg")).convert()
     pygame.display.set_icon(icon)
-
-    clock = pygame.time.Clock()
 
     # make mouse
     curs = pygame.Cursor()
@@ -41,6 +43,18 @@ def __main__() -> None:
     font = pygame.font.Font(None, 36)
     timer = Timer(font, int(width / 2), 36 / 2, 10)
     texts.add(timer)
+
+    # points
+    points = 0
+    points_p1 = Points(font, points, 0.5 * margin, 50)
+    points_p2 = Points(font, points, width - 0.5 * margin, 50)
+    texts.add(points_p1, points_p2)
+
+    # points
+    points = 0
+    points_p1 = Points(font, points, 0.5 * margin, 50)
+    points_p2 = Points(font, points, width - 0.5 * margin, 50)
+    texts.add(points_p1, points_p2)
 
     # MAKE PLAYER BOARDs
     p1_board = pygame.Rect(0, 0, margin, height)
@@ -66,6 +80,9 @@ def __main__() -> None:
     game_over = False
     is_dragging_shape = False
     is_player_1 = True
+    density = 0
+    total_cells = width_and_height**2
+
     while True:
         try:
             if game_over:
@@ -73,11 +90,15 @@ def __main__() -> None:
 
             # if shape is placed generate new shape
             if shape.is_placed:
+                density = len(shape_handler.covered_cells) / total_cells * 100
+                print(density)
                 timer.reset()
                 if is_player_1:
+                    points_p1.add_points(shape.shape, density)
                     shape = shape_handler.generate_shape(green_block)
                     is_player_1 = False
                 else:
+                    points_p2.add_points(shape.shape, density)
                     shape = shape_handler.generate_shape(red_block)
                     is_player_1 = True
 
