@@ -21,18 +21,19 @@ def __main__() -> None:
 
     pygame.init()
 
-    # make grid
     full_screen_size = pyautogui.size()
     screen = pygame.display.set_mode((width, height))
     clock = pygame.time.Clock()
-    start_screen(clock, screen)
-
-    cell_centers = draw_grid(screen, cell_size, width_and_height, margin)
 
     # make header
     pygame.display.set_caption("boardgame")
     icon = pygame.image.load(os.path.join(os.getcwd(), "images/siep.jpg")).convert()
     pygame.display.set_icon(icon)
+
+    start_screen(clock, screen)
+
+    # grid
+    cell_centers = draw_grid(screen, cell_size, width_and_height, margin)
 
     # make mouse
     curs = pygame.Cursor()
@@ -65,10 +66,22 @@ def __main__() -> None:
     )
 
     # make block + shape handler
-    red_block = Block(200, 200, cell_size - 0.5, r_block_img)
-    green_block = Block(width - 200, 200, cell_size - 0.5, g_block_img)
+    red_block = Block(
+        int(margin / 2), int(height - margin / 2), cell_size - 0.5, r_block_img
+    )
+    green_block = Block(
+        width - int(margin / 2), int(height - margin / 2), cell_size - 0.5, g_block_img
+    )
     shape_handler = ShapeHandler()
+
+    # make current shape
     shape = shape_handler.generate_shape(red_block)
+    shape.move(int(margin / 2), int(height / 2))
+
+    # make next shapes
+    p1_next_shape = shape_handler.generate_shape(red_block)
+
+    p2_next_shape = shape_handler.generate_shape(green_block)
 
     # main game loop
     game_over = False
@@ -85,15 +98,18 @@ def __main__() -> None:
             # if shape is placed generate new shape
             if shape.is_placed:
                 density = len(shape_handler.covered_cells) / total_cells * 100
-                print(density)
                 timer.reset()
                 if is_player_1:
                     points_p1.add_points(shape.shape, density)
-                    shape = shape_handler.generate_shape(green_block)
+                    shape = p2_next_shape
+                    shape.move(width - int(margin / 2), int(height / 2))
+                    p2_next_shape = shape_handler.generate_shape(green_block)
                     is_player_1 = False
                 else:
                     points_p2.add_points(shape.shape, density)
-                    shape = shape_handler.generate_shape(red_block)
+                    shape = p1_next_shape
+                    shape.move(int(margin / 2), int(height / 2))
+                    p1_next_shape = shape_handler.generate_shape(red_block)
                     is_player_1 = True
 
             # player input
