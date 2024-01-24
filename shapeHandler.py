@@ -22,7 +22,16 @@ class ShapeHandler:
         for shape in self.all_shapes:
             shape.draw(screen)
 
-    def check_is_valid_pos(self, x, y, shape, width_and_height, cell_size, closest_index):
+    def check_is_valid_pos(
+        self,
+        x: int,
+        y: int,
+        shape,
+        width_and_height,
+        cell_size,
+        closest_index,
+    ):
+        # get closest index of shape
         match shape:
             case Shapes.ONEBYONE:
                 if closest_index in self.covered_cells:
@@ -32,7 +41,10 @@ class ShapeHandler:
                     return True
 
             case Shapes.TWOBYONE:
-                if closest_index in self.covered_cells or closest_index + 1 in self.covered_cells:
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + 1 in self.covered_cells
+                ):
                     return False
                 else:
                     result = not x >= 205 + width_and_height * cell_size
@@ -43,11 +55,18 @@ class ShapeHandler:
                 return result
 
             case Shapes.TWOBYTWO:
-                if closest_index in self.covered_cells or closest_index + 1 in self.covered_cells\
-                    or closest_index + width_and_height in self.covered_cells or closest_index + width_and_height + 1 in self.covered_cells:
-                        return False
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + 1 in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                    or closest_index + width_and_height + 1 in self.covered_cells
+                ):
+                    return False
                 else:
-                    result = not (x >= 205 + width_and_height * cell_size or y >= 205 + width_and_height * cell_size)
+                    result = not (
+                        x >= 205 + width_and_height * cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
                     if result:
                         self.covered_cells.add(closest_index)
                         self.covered_cells.add(closest_index + 1)
@@ -57,7 +76,10 @@ class ShapeHandler:
                 return result
 
             case Shapes.ONEBYTWO:
-                if closest_index in self.covered_cells or closest_index + width_and_height in self.covered_cells:
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                ):
                     return False
                 else:
                     result = not y >= 205 + width_and_height * cell_size
@@ -68,11 +90,18 @@ class ShapeHandler:
                 return result
 
             case Shapes.S_BLOCK:
-                if closest_index + 1 in self.covered_cells or closest_index + 2 in self.covered_cells\
-                    or closest_index + width_and_height in self.covered_cells or closest_index + width_and_height + 1 in self.covered_cells:
-                        return False
+                if (
+                    closest_index + 1 in self.covered_cells
+                    or closest_index + 2 in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                    or closest_index + width_and_height + 1 in self.covered_cells
+                ):
+                    return False
                 else:
-                    result = not (x >= 205 + width_and_height * cell_size - cell_size or y >= 205 + width_and_height * cell_size)
+                    result = not (
+                        x >= 205 + width_and_height * cell_size - cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
                     if result:
                         self.covered_cells.add(closest_index + 1)
                         self.covered_cells.add(closest_index + 2)
@@ -82,11 +111,18 @@ class ShapeHandler:
                 return result
 
             case Shapes.Z_BLOCK:
-                if closest_index in self.covered_cells or closest_index + 1 in self.covered_cells\
-                    or closest_index + width_and_height + 1 in self.covered_cells or closest_index + width_and_height + 2 in self.covered_cells:
-                        return False
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + 1 in self.covered_cells
+                    or closest_index + width_and_height + 1 in self.covered_cells
+                    or closest_index + width_and_height + 2 in self.covered_cells
+                ):
+                    return False
                 else:
-                    result = not (x >= 205 + width_and_height * cell_size - cell_size or y >= 205 + width_and_height * cell_size)
+                    result = not (
+                        x >= 205 + width_and_height * cell_size - cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
                     if result:
                         self.covered_cells.add(closest_index)
                         self.covered_cells.add(closest_index + 1)
@@ -96,11 +132,17 @@ class ShapeHandler:
                 return result
 
             case Shapes.I_BLOCK_LYING:
-                if closest_index in self.covered_cells or closest_index + 1 in self.covered_cells\
-                    or closest_index + 2 in self.covered_cells or closest_index + 3 in self.covered_cells:
-                        return False
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + 1 in self.covered_cells
+                    or closest_index + 2 in self.covered_cells
+                    or closest_index + 3 in self.covered_cells
+                ):
+                    return False
                 else:
-                    result = not (x >= 205 + width_and_height * cell_size - 2*cell_size)
+                    result = not (
+                        x >= 205 + width_and_height * cell_size - 2 * cell_size
+                    )
                     if result:
                         self.covered_cells.add(closest_index)
                         self.covered_cells.add(closest_index + 1)
@@ -110,18 +152,23 @@ class ShapeHandler:
                 return result
 
             case Shapes.I_BLOCK_STANDING:
-                if closest_index in self.covered_cells or closest_index + width_and_height in self.covered_cells\
-                    or closest_index + 2*width_and_height in self.covered_cells or closest_index + 3*width_and_height in self.covered_cells:
-                        return False
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                    or closest_index + 2 * width_and_height in self.covered_cells
+                    or closest_index + 3 * width_and_height in self.covered_cells
+                ):
+                    return False
                 else:
-                    result = not (y >= 205 + width_and_height * cell_size - 2*cell_size)
+                    result = not (
+                        y >= 205 + width_and_height * cell_size - 2 * cell_size
+                    )
                     if result:
                         self.covered_cells.add(closest_index)
                         self.covered_cells.add(closest_index + width_and_height)
-                        self.covered_cells.add(closest_index + 2*width_and_height)
-                        self.covered_cells.add(closest_index + 3*width_and_height)
+                        self.covered_cells.add(closest_index + 2 * width_and_height)
+                        self.covered_cells.add(closest_index + 3 * width_and_height)
 
                 return result
-
 
         return True

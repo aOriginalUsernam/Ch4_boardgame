@@ -88,26 +88,34 @@ def __main__() -> None:
                         raise SystemExit
                     case pygame.MOUSEBUTTONUP:
                         is_dragging_shape = False
-                        for item in shape.sprites():
-                            if (
-                                item.rect.collidepoint(x, y)
-                                or shape.shape == Shapes.S_BLOCK
-                            ):
-                                closest_grid_x_and_y, closest_index = closest_grid(
-                                    cell_centers, x, y
-                                )
-                                x, y = closest_grid_x_and_y
-                                is_valid = shape_handler.check_is_valid_pos(
-                                    x,
-                                    y,
-                                    shape.shape,
-                                    width_and_height,
-                                    cell_size,
-                                    closest_index,
-                                )
-                                if is_valid:
-                                    shape.move(x, y)
-                                    shape.is_placed = True
+                        is_valid = True
+                        item = shape.sprites()[0]
+                        # if inside of a board it has no valid pos
+                        for board in [p1_board, p2_board]:
+                            if board.left <= x and board.right >= x:
+                                is_valid = False
+                                break
+
+                        # get closest grid and check if shape has valid pos
+                        if (
+                            item.rect.collidepoint(x, y)
+                            or shape.shape == Shapes.S_BLOCK
+                        ) and is_valid:
+                            closest_grid_x_and_y, closest_index = closest_grid(
+                                cell_centers, x, y
+                            )
+                            x, y = closest_grid_x_and_y
+                            is_valid = shape_handler.check_is_valid_pos(
+                                x,
+                                y,
+                                shape.shape,
+                                width_and_height,
+                                cell_size,
+                                closest_index,
+                            )
+                            if is_valid:
+                                shape.move(x, y)
+                                shape.is_placed = True
                     case pygame.MOUSEBUTTONDOWN:
                         # what to do when mouse down
                         x, y = pygame.mouse.get_pos()
