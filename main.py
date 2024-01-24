@@ -7,6 +7,7 @@ from block import Block
 from shape import Shape
 from shapes import Shapes
 from shapeHandler import ShapeHandler
+from text import Timer
 import random
 
 
@@ -34,6 +35,12 @@ def __main__() -> None:
     # make mouse
     curs = pygame.Cursor()
     pygame.mouse.set_cursor(curs)
+
+    # make timer
+    texts = pygame.sprite.Group()
+    font = pygame.font.Font(None, 36)
+    timer = Timer(font, int(width / 2), 36 / 2, 10)
+    texts.add(timer)
 
     # MAKE PLAYER BOARD
     p1_board = pygame.Rect(0, 0, margin, height)
@@ -63,6 +70,7 @@ def __main__() -> None:
 
             # if shape is placed generate new shape
             if shape.is_placed:
+                timer.reset()
                 if is_player_1:
                     shape = shape_handler.generate_shape(green_block)
                     is_player_1 = False
@@ -89,7 +97,14 @@ def __main__() -> None:
                                     cell_centers, x, y
                                 )
                                 x, y = closest_grid_x_and_y
-                                is_valid = shape_handler.check_is_valid_pos(x, y, shape.shape, width_and_height, cell_size, closest_index)
+                                is_valid = shape_handler.check_is_valid_pos(
+                                    x,
+                                    y,
+                                    shape.shape,
+                                    width_and_height,
+                                    cell_size,
+                                    closest_index,
+                                )
                                 if is_valid:
                                     shape.move(x, y)
                                     shape.is_placed = True
@@ -110,8 +125,13 @@ def __main__() -> None:
             pygame.draw.rect(screen, col, p1_board)
             pygame.draw.rect(screen, col, p2_board)
             shape_handler.draw_shapes(screen)
+            texts.draw(screen)
 
             pygame.display.flip()
+            try:
+                timer.tick()
+            except:
+                game_over = True
             clock.tick(60)
 
         except SystemExit:
