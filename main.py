@@ -39,7 +39,7 @@ def __main__() -> None:
 
     # make block
     my_block = Block(200, 200, cell_size - 0.5, r_block_img)
-    shape = Shape(my_block, Shapes.S_BLOCK)
+    shape = Shape(my_block, Shapes.Z_BLOCK)
 
     # main game loop
     game_over = False
