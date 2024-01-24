@@ -97,7 +97,14 @@ def __main__() -> None:
                                     cell_centers, x, y
                                 )
                                 x, y = closest_grid_x_and_y
-                                is_valid = shape_handler.check_is_valid_pos(x, y, shape.shape, width_and_height, cell_size, closest_index)
+                                is_valid = shape_handler.check_is_valid_pos(
+                                    x,
+                                    y,
+                                    shape.shape,
+                                    width_and_height,
+                                    cell_size,
+                                    closest_index,
+                                )
                                 if is_valid:
                                     shape.move(x, y)
                                     shape.is_placed = True
@@ -121,7 +128,10 @@ def __main__() -> None:
             texts.draw(screen)
 
             pygame.display.flip()
-            timer.tick()
+            try:
+                timer.tick()
+            except:
+                game_over = True
             clock.tick(60)
 
         except SystemExit:
