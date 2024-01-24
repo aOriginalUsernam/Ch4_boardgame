@@ -42,10 +42,13 @@ def __main__() -> None:
     timer = Timer(font, int(width / 2), 36 / 2, 10)
     texts.add(timer)
 
-    # MAKE PLAYER BOARD
+    # MAKE PLAYER BOARDs
     p1_board = pygame.Rect(0, 0, margin, height)
+    board_next_shape_p1 = pygame.Rect(0, height - margin, margin, height)
     p2_board = pygame.Rect(width - margin, 0, margin, height)
-    col = pygame.Color(10, 10, 10)
+    board_next_shape_p2 = pygame.Rect(width - margin, height - margin, margin, height)
+    board_col = pygame.Color(10, 10, 10)
+    next_shape_board_col = pygame.Color(50, 0, 50)
 
     # load block image
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
@@ -130,8 +133,10 @@ def __main__() -> None:
 
             # update screen
             draw_grid(screen, cell_size, width_and_height, margin)
-            pygame.draw.rect(screen, col, p1_board)
-            pygame.draw.rect(screen, col, p2_board)
+            pygame.draw.rect(screen, board_col, p1_board)
+            pygame.draw.rect(screen, board_col, p2_board)
+            pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p1)
+            pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p2)
             shape_handler.draw_shapes(screen)
             texts.draw(screen)
 
