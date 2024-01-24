@@ -8,6 +8,7 @@ from shape import Shape
 from shapes import Shapes
 from shapeHandler import ShapeHandler
 from text import Timer, Button, Points
+from board import Board
 import random
 from menu import *
 
@@ -52,11 +53,14 @@ def __main__() -> None:
     texts.add(points_p1, points_p2)
 
     # MAKE PLAYER BOARDs
-    p1_board = pygame.Rect(0, 0, margin, height)
-    board_next_shape_p1 = pygame.Rect(0, height - margin, margin, height)
-    p2_board = pygame.Rect(width - margin, 0, margin, height)
-    board_next_shape_p2 = pygame.Rect(width - margin, height - margin, margin, height)
     board_col = pygame.Color(10, 10, 10)
+    p1_board = Board(board_col, 0, 0, margin, height)
+    p2_board = Board(board_col, width - margin, 0, margin, height)
+    # p1_board = pygame.Rect(0, 0, margin, height)
+    # board_next_shape_p1 = pygame.Rect(0, height - margin, margin, height)
+    # p2_board = pygame.Rect(width - margin, 0, margin, height)
+    # board_next_shape_p2 = pygame.Rect(width - margin, height - margin, margin, height)
+
     next_shape_board_col = pygame.Color(50, 0, 50)
 
     # load block image
@@ -126,7 +130,7 @@ def __main__() -> None:
                         item = shape.sprites()[0]
                         # if inside of a board it has no valid pos
                         for board in [p1_board, p2_board]:
-                            if board.left <= x and board.right >= x:
+                            if board.is_xpos_in_board(x):
                                 is_valid = False
                                 break
 
@@ -164,10 +168,12 @@ def __main__() -> None:
 
             # update screen
             draw_grid(screen, cell_size, width_and_height, margin)
-            pygame.draw.rect(screen, board_col, p1_board)
-            pygame.draw.rect(screen, board_col, p2_board)
-            pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p1)
-            pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p2)
+            p1_board.draw(screen)
+            p2_board.draw(screen)
+            # pygame.draw.rect(screen, board_col, p1_board)
+            # pygame.draw.rect(screen, board_col, p2_board)
+            # pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p1)
+            # pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p2)
             shape_handler.draw_shapes(screen)
             texts.draw(screen)
 
