@@ -5,3 +5,4 @@ date,activity,time_spent,details
 22-01-2024,coderen,1h,ik heb een paar shapes gemaakt
 23-01-2024,coderen,3h,gewerkt aan grid snap zodat de vorm perfect in het vierkant gaat. en de is_valid functie gemaakt die ervoor zorgt dat een vormp niet buiten de grid kan gaan
 24-01-2024,coderen,2h, ik heb ervoor gezorgd dat je vormpjes niet meer op elkaar kan zetten
+24-01-2024,coderen en testen, 4h, ik heb gemaakt dat je meer punten krijgt des te minder plek er vrij is op het bord. wat sounds toegevoegd en een start gemaakt aan een rotate functie die de blokjes draait.
