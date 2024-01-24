@@ -7,7 +7,7 @@ from block import Block
 from shape import Shape
 from shapes import Shapes
 from shapeHandler import ShapeHandler
-from text import Timer, Button, Points
+from text import Timer, Button, Points, Image
 import random
 from menu import *
 
@@ -58,11 +58,15 @@ def __main__() -> None:
     board_col = pygame.Color(10, 10, 10)
     next_shape_board_col = pygame.Color(50, 0, 50)
 
-    # load block image
+    # load images
     r_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_red.png"))
-    g_block_img = pygame.image.load(
-        os.path.join(os.getcwd(), "images\\block_green.png")
-    )
+    g_block_img = pygame.image.load(os.path.join(os.getcwd(), "images\\block_green.png"))
+    rotate_image = pygame.image.load(os.path.join(os.getcwd(), "images\\rotate.png"))
+    rotate_img = Image(rotate_image, width / 2, 100, 30)
+    texts.add(rotate_img)
+    
+    
+    
 
     # make block + shape handler
     red_block = Block(200, 200, cell_size - 0.5, r_block_img)
@@ -141,6 +145,17 @@ def __main__() -> None:
                             if item.rect.collidepoint(x, y):
                                 is_dragging_shape = True
                                 break
+                    # case pygame.KEYDOWN:
+                    #     match event.key:
+                    #         case pygame.K_r:
+                    #             rotate_img.rotate_block(shape, red_block)
+
+
+
+
+
+
+
                     case pygame.KEYDOWN:
                         match event.key:
                             case pygame.K_ESCAPE:

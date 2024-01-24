@@ -1,17 +1,17 @@
 import pygame
 import os
 from text import Button
+import time
 
-# pygame.init()
-# # pygame.mixer.music.load(os.path.join(os.getcwd(), "data/sounds/m3.wav"))
-# # pygame.mixer.music.play(-1)
-# button_press = pygame.mixer.Sound(
-#     os.path.join(os.getcwd(), "sounds\\button_press.mp3")
-#     )
+pygame.init()
+# pygame.mixer.music.load(os.path.join(os.getcwd(), "data/sounds/m3.wav"))
+# pygame.mixer.music.play(-1)
+button_press_sound = pygame.mixer.Sound(
+    os.path.join(os.getcwd(), "sounds\\button_press.mp3")
+    )
 
-# button_press.play()
-# pygame.time.delay(1000)
-
+pygame.mixer.music.load(os.path.join(os.getcwd(), "sounds\\Tetris.mp3"))
+pygame.mixer.music.set_volume(0.05)
 
 
 def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> int:
@@ -35,6 +35,8 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
                 case pygame.MOUSEBUTTONUP:
                     if start_btn in btns:
                         if start_btn.rect.collidepoint(event.pos):
+                            button_press_sound.play()
+                            pygame.mixer.music.play(-1)
                             return 0
                         elif quit_btn.rect.collidepoint(event.pos):
                             pygame.quit()
