@@ -1,5 +1,6 @@
 import pygame
 import os
+from text import Button
 
 # pygame.init()
 # # pygame.mixer.music.load(os.path.join(os.getcwd(), "data/sounds/m3.wav"))
@@ -13,45 +14,33 @@ import os
 
 
 
-def start_screen(clock, screen):
-    # Make buttons
+def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> int:
+    # make buttons
     font = pygame.font.SysFont("Georgia", 40, bold=True)
 
-    # Start button
+    # start button
     start_btn = Button(font, "START", screen.get_width() / 4, screen.get_height() / 2)
 
-    # Quit button
+    # quit button
     quit_btn = Button(font, "QUIT", screen.get_width() / 4 * 3, screen.get_height() / 2)
 
-    # P1
-    p1_btn = Button(font, "ONE PLAYER", screen.get_width() / 4, screen.get_height() / 2)
-
-    # P2
-    p2_btn = Button(font, "TWO PLAYERS", screen.get_width() / 4 * 3, screen.get_height() / 2)
-
-    # Example usage to draw buttons
-    buttons = [start_btn, quit_btn, p1_btn, p2_btn]
-    for button in buttons:
-        button.draw(screen)
-
-    pygame.display.flip()
-
-    # Example usage to check for button click
+    btns = pygame.sprite.Group()
+    btns.add(start_btn, quit_btn)
     while True:
+        screen.fill("black")
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                for button in buttons:
-                    if button.is_clicked(pos):
-                        if button.text == "START":
-                            return 1  # Return an appropriate value for START button
-                        elif button.text == "QUIT":
+            match event.type:
+                case pygame.QUIT:
+                    return 0
+                case pygame.MOUSEBUTTONUP:
+                    if start_btn in btns:
+                        if start_btn.rect.collidepoint(event.pos):
+                            return 0
+                        elif quit_btn.rect.collidepoint(event.pos):
                             pygame.quit()
-                            quit()
-                        elif button.text == "ONE PLAYER":
-                            return 2  # Return an appropriate value for ONE PLAYER button
-                        elif button.text == "TWO PLAYERS":
-                            return 3  # Return an appropriate value for TWO PLAYERS button
+                            return 0
+        # draw start buttons
+        btns.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(15)
