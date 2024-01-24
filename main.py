@@ -50,12 +50,6 @@ def __main__() -> None:
     points_p2 = Points(font, points, width - 0.5 * margin, 50)
     texts.add(points_p1, points_p2)
 
-    # points
-    points = 0
-    points_p1 = Points(font, points, 0.5 * margin, 50)
-    points_p2 = Points(font, points, width - 0.5 * margin, 50)
-    texts.add(points_p1, points_p2)
-
     # MAKE PLAYER BOARDs
     p1_board = pygame.Rect(0, 0, margin, height)
     board_next_shape_p1 = pygame.Rect(0, height - margin, margin, height)
