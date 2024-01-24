@@ -12,7 +12,7 @@ import random
 
 def __main__() -> None:
     margin = 230
-    width_and_height = 10  # int(input("Board size: "))
+    width_and_height = 8  # int(input("Board size: "))
     cell_size = 50
     width = width_and_height * cell_size + 2 * margin
     height = width_and_height * cell_size + 2 * margin

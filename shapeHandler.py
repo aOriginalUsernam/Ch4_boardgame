@@ -12,8 +12,8 @@ class ShapeHandler:
         self.covered_cells = set()
 
     def generate_shape(self, block: Block) -> Shape:
-        # toReturn = Shape(block, Shapes(random.randint(0, 7)))
-        toReturn = Shape(block, Shapes.I_BLOCK_STANDING)
+        toReturn = Shape(block, Shapes(random.randint(0, 7)))
+        # toReturn = Shape(block, Shapes.I_BLOCK_STANDING)
         self.all_shapes.append(toReturn)
         self.current_shape += 1
         return toReturn
@@ -122,6 +122,5 @@ class ShapeHandler:
                         self.covered_cells.add(closest_index + 3*width_and_height)
 
                 return result
-
 
         return True
