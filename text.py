@@ -25,7 +25,7 @@ class Timer(pygame.sprite.Sprite):
             self.time -= 1
             if self.time < 0:
                 raise SystemExit
-            self.image = self.font.render(f"[{self.time}]", True, "white")
+            self.image = self.font.render(f"{self.time} seconds", True, "white")
 
     def reset(self):
         self.time = self.start_time

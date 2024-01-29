@@ -185,10 +185,6 @@ def __main__() -> None:
             draw_grid(screen, cell_size, width_and_height, margin)
             p1_board.draw(screen)
             p2_board.draw(screen)
-            # pygame.draw.rect(screen, board_col, p1_board)
-            # pygame.draw.rect(screen, board_col, p2_board)
-            # pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p1)
-            # pygame.draw.rect(screen, next_shape_board_col, board_next_shape_p2)
             shape_handler.draw_shapes(screen)
             texts.draw(screen)
 
