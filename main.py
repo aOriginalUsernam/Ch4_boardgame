@@ -43,7 +43,7 @@ def __main__() -> None:
     # make timer
     texts = pygame.sprite.Group()
     font = pygame.font.Font(None, 36)
-    timer = Timer(font, int(width / 2), 36 / 2, 10)
+    timer = Timer(font, int(width / 2), 36 / 2, 15)
     texts.add(timer)
 
     # points
