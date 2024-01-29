@@ -141,7 +141,9 @@ def __main__() -> None:
                         # get closest grid and check if shape has valid pos
                         if (
                             item.rect.collidepoint(x, y)
-                            or shape.shape == Shapes.S_BLOCK
+                            or shape.shape == Shapes.S_BLOCK or shape.shape == Shapes.Z_BLOCK_R
+                            or shape.shape == Shapes.T_BLOCK or shape.shape == Shapes.T_BLOCK_R
+                            or shape.shape == Shapes.T_BLOCK_R2
                         ) and is_valid:
                             closest_grid_x_and_y, closest_index = closest_grid(
                                 cell_centers, x, y
@@ -165,15 +167,16 @@ def __main__() -> None:
                             if item.rect.collidepoint(x, y):
                                 is_dragging_shape = True
                                 break
-                    # case pygame.KEYDOWN:
-                    #     match event.key:
-                    #         case pygame.K_r:
-                    #             rotate_img.rotate_block(shape, red_block)
-
-
-
-
-
+                
+                    case pygame.KEYDOWN:
+                        if is_dragging_shape:
+                            match event.key:
+                                case pygame.K_r:
+                                    img = r_block_img if is_player_1 else g_block_img
+                                    rotate = True
+                                    my_block = Block(x + 25, y + 25, cell_size - 0.5, img)
+                                    shape_handler.all_shapes.remove(shape)
+                                    shape = shape_handler.generate_shape(my_block, shape.shape, rotate)
 
 
                     case pygame.KEYDOWN:

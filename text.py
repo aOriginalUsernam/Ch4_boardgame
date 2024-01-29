@@ -106,7 +106,19 @@ class Points(pygame.sprite.Sprite):
                     self.points += 2
 
             case Shapes.S_BLOCK:
-                if density <= 50:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
+                    self.points += 3
+                elif density <= 70:
+                    self.points += 4
+                else:
+                    self.points += 5
+            
+            case Shapes.S_BLOCK_R:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
                     self.points += 3
                 elif density <= 70:
                     self.points += 4
@@ -114,7 +126,19 @@ class Points(pygame.sprite.Sprite):
                     self.points += 5
 
             case Shapes.Z_BLOCK:
-                if density <= 50:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
+                    self.points += 3
+                elif density <= 70:
+                    self.points += 4
+                else:
+                    self.points += 5
+            
+            case Shapes.Z_BLOCK_R:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
                     self.points += 3
                 elif density <= 70:
                     self.points += 4
@@ -132,6 +156,46 @@ class Points(pygame.sprite.Sprite):
                     self.points += 2
                 else:
                     self.points += 3
+
+            case Shapes.T_BLOCK:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
+                    self.points += 3
+                elif density <= 70:
+                    self.points += 4
+                else:
+                    self.points += 5
+            
+            case Shapes.T_BLOCK_R:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
+                    self.points += 3
+                elif density <= 70:
+                    self.points += 4
+                else:
+                    self.points += 5
+                    
+            case Shapes.T_BLOCK_R2:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
+                    self.points += 3
+                elif density <= 70:
+                    self.points += 4
+                else:
+                    self.points += 5
+            
+            case Shapes.T_BLOCK_R3:
+                if density <= 30:
+                    self.points += 2
+                elif density <= 50:
+                    self.points += 3
+                elif density <= 70:
+                    self.points += 4
+                else:
+                    self.points += 5
 
         self.image = self.font.render(f"{self.points}", True, "white")
         return self.points
