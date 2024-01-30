@@ -19,13 +19,13 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
     font = pygame.font.SysFont("Georgia", 40, bold=True)
 
     # start button
-    resume_btn = Button(font, "START", screen.get_width() / 4, screen.get_height() / 2)
+    start_btn = Button(font, "START", screen.get_width() / 4, screen.get_height() / 2)
 
     # quit button
     quit_btn = Button(font, "QUIT", screen.get_width() / 4 * 3, screen.get_height() / 2)
 
     btns = pygame.sprite.Group()
-    btns.add(resume_btn, quit_btn)
+    btns.add(start_btn, quit_btn)
     while True:
         screen.fill("black")
         for event in pygame.event.get():
@@ -33,8 +33,8 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
                 case pygame.QUIT:
                     return 0
                 case pygame.MOUSEBUTTONUP:
-                    if resume_btn in btns:
-                        if resume_btn.rect.collidepoint(event.pos):
+                    if start_btn in btns:
+                        if start_btn.rect.collidepoint(event.pos):
                             button_press_sound.play()
                             pygame.mixer.music.play(-1)
                             return 1
@@ -55,11 +55,13 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
     # start button
     resume_btn = Button(font, "RESUME", screen.get_width() / 4, screen.get_height() / 2)
 
+    save_btn = Button(font, "SAVE", screen.get_width() / 4 * 1.5, screen.get_height()/ 2)
+
     # quit button
     quit_btn = Button(font, "QUIT", screen.get_width() / 4 * 3, screen.get_height() / 2)
 
     btns = pygame.sprite.Group()
-    btns.add(resume_btn, quit_btn)
+    btns.add(resume_btn, save_btn, quit_btn)
     while True:
         screen.fill("black")
         for event in pygame.event.get():
@@ -72,6 +74,9 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
                             button_press_sound.play()
                             pygame.mixer.music.play(-1)
                             return 1
+                        elif save_btn.rect.collidepoint(event.pos):
+                            button_press_sound.play()
+                            return 2
                         elif quit_btn.rect.collidepoint(event.pos):
                             pygame.quit()
                             return 0

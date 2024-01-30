@@ -8,6 +8,7 @@ from shapes import *
 from grid import *
 from block import *
 from board import *
+from menu import *
 
 number = 1
 with open("save_file1.json", 'w') as file:
@@ -229,7 +230,8 @@ class GameLoop:
                         case pygame.KEYDOWN:
                             match event.key:
                                 case pygame.K_ESCAPE:
-                                    self.save_game()
+                                    pause_screen(self.clock, screen)
+                                    
                                     raise SystemExit
                                 case pygame.K_r:
                                     if is_dragging_shape:
