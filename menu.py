@@ -16,16 +16,18 @@ pygame.mixer.music.set_volume(0.05)
 
 def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> int:
     # make buttons
-    font = pygame.font.SysFont("Georgia", 40, bold=True)
+    font = pygame.font.SysFont("Georgia", 80, bold=True)
 
     # start button
-    start_btn = Button(font, "START", screen.get_width() / 4, screen.get_height() / 2)
+    start_btn = Button(font, "START", screen.get_width() / 100 * 35, screen.get_height() / 100 * 25)
+
+    load_btn = Button(font, "LOAD GAME", screen.get_width() / 100 * 22, screen.get_height() / 100 * 45)
 
     # quit button
-    quit_btn = Button(font, "QUIT", screen.get_width() / 4 * 3, screen.get_height() / 2)
+    quit_btn = Button(font, "QUIT", screen.get_width() / 100 * 38, screen.get_height() / 100 * 65)
 
     btns = pygame.sprite.Group()
-    btns.add(start_btn, quit_btn)
+    btns.add(start_btn, load_btn, quit_btn)
     while True:
         screen.fill("black")
         for event in pygame.event.get():
@@ -41,6 +43,8 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
                         elif quit_btn.rect.collidepoint(event.pos):
                             pygame.quit()
                             return 0
+                        elif load_btn.rect.collidepoint(event.pos):
+                            return 2
         # draw start buttons
         btns.draw(screen)
 

@@ -30,7 +30,7 @@ class GameLoop:
 
         if load_game:
             self.load_game(
-                clock, screen, width_and_height, margin, cell_amount, cell_size
+                clock, screen, width_and_height
             )
         else:
             self.start_game(
@@ -112,8 +112,9 @@ class GameLoop:
         p2_next_shape = self.shape_handler.generate_shape("green")
         self.next_shapes = {"red": p1_next_shape, "green": p2_next_shape}
 
-    def load_game(self) -> bool:
-        pass
+    def load_game(self, clock: pygame.time.Clock, screen: pygame.display, width_and_height: tuple[int, int]) -> bool:
+        with open("save_file1.json", "w") as file:
+            json.loads(file)
 
     def save_game(self, is_player_1: bool) -> bool:
         def serialize(obj):
@@ -246,7 +247,7 @@ class GameLoop:
                                     resp = pause_screen(self.clock, screen)
                                     if resp != 1:
                                         if resp == 2:
-                                            self.save_game()
+                                            self.save_game(is_player_1)
                                         raise SystemExit
                                 case pygame.K_r:
                                     if is_dragging_shape:
