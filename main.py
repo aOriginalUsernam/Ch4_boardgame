@@ -36,6 +36,7 @@ def __main__() -> None:
         if resp == 0:
             raise SystemExit
         elif resp == 1:
+            get_names(clock, screen)
             loop = GameLoop(
                 clock, screen, (width, height), margin, cell_amount, cell_size
             )

@@ -55,6 +55,11 @@ class Image(pygame.sprite.Sprite):
             self.image.get_height() + 10,
         )
 
+# class PlayerText(pygame.sprite.Sprite):
+#     def __init__(self, font: pygame.font.Sysfont("Georgia"), x: int, y: int, size: int):
+#         pygame.sprite.Sprite.__init__(self)
+#         self.image = font.render(str("Player 1 name"), True, "white").convert_alpha()
+#         self.rect
 
 class Points(pygame.sprite.Sprite):
     def __init__(self, font: pygame.font.Font, points: int, x: int, y: int) -> None:
