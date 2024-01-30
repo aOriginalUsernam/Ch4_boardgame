@@ -50,15 +50,15 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
 
 def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> int:
     # make buttons
-    font = pygame.font.SysFont("Georgia", 40, bold=True)
+    font = pygame.font.SysFont("Georgia", 80, bold=True)
 
     # start button
-    resume_btn = Button(font, "RESUME", screen.get_width() / 4, screen.get_height() / 2)
+    resume_btn = Button(font, "RESUME", screen.get_width() / 100 * 30, screen.get_height() / 100 * 25)
 
-    save_btn = Button(font, "SAVE", screen.get_width() / 4 * 1.5, screen.get_height()/ 2)
+    save_btn = Button(font, "SAVE", screen.get_width() / 100 * 38, screen.get_height()/ 100 * 45)
 
     # quit button
-    quit_btn = Button(font, "QUIT", screen.get_width() / 4 * 3, screen.get_height() / 2)
+    quit_btn = Button(font, "QUIT", screen.get_width() / 100 * 38, screen.get_height() / 100 * 65)
 
     btns = pygame.sprite.Group()
     btns.add(resume_btn, save_btn, quit_btn)

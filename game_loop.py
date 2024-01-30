@@ -230,9 +230,11 @@ class GameLoop:
                         case pygame.KEYDOWN:
                             match event.key:
                                 case pygame.K_ESCAPE:
-                                    pause_screen(self.clock, screen)
-                                    
-                                    raise SystemExit
+                                    resp = pause_screen(self.clock, screen)
+                                    if resp != 1:
+                                        if resp == 2:
+                                            self.save_game()
+                                        raise SystemExit
                                 case pygame.K_r:
                                     if is_dragging_shape:
                                         size = self.current_shape.block.size
