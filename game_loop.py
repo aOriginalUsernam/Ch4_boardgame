@@ -118,8 +118,11 @@ class GameLoop:
         is_player_1 = True
         density = 0
         total_cells = self.grid.cell_amount**2
-        texts = pygame.sprite.Group(self.rotate_img, self.timer, self.points.values())
+
         while True:
+            texts = pygame.sprite.Group(
+                self.rotate_img, self.timer, self.points["red"], self.points["green"]
+            )
             try:
                 if game_over:
                     raise SystemExit
@@ -129,7 +132,7 @@ class GameLoop:
                     density = len(self.shape_handler.covered_cells) / total_cells * 100
                     self.timer.reset()
                     if is_player_1:
-                        self.points["red"].add_points(self.current_shape, density)
+                        self.points["red"].add_points(self.current_shape.shape, density)
                         self.current_shape = self.next_shapes["green"]
                         self.current_shape.move(
                             self.width_and_height[0] - 40,
@@ -140,7 +143,9 @@ class GameLoop:
                         )
                         is_player_1 = False
                     else:
-                        self.points["green"].add_points(self.current_shape, density)
+                        self.points["green"].add_points(
+                            self.current_shape.shape, density
+                        )
                         self.current_shape = self.next_shapes["red"]
                         self.current_shape.move(40, int(self.width_and_height[1] / 2))
                         self.next_shapes["red"] = self.shape_handler.generate_shape(

@@ -12,9 +12,9 @@ class ShapeHandler:
         self.current_shape = -1
         self.covered_cells = set()
 
-    def generate_shape(self, block: Block, shape=None, rotate=None) -> Shape:
+    def generate_shape(self, block: str, shape=None, rotate=None) -> Shape:
         if shape is None:
-            toReturn = Shape(block, Shapes(random.randint(0, 6)), rotate)
+            toReturn = Shape(self.blocks[block], Shapes(random.randint(0, 6)), rotate)
         else:
             toReturn = Shape(block, shape, rotate)
 
