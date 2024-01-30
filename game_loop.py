@@ -115,10 +115,12 @@ class GameLoop:
     def load_game(self) -> bool:
         pass
 
-    def save_game(self, is_player_1: bool) -> bool:
+    def save_game(self) -> bool:
         def serialize(obj):
             if type(obj) == Block:
                 return (obj.rect.x, obj.rect.y)
+            elif type(obj) == Points:
+                return obj.points
             elif type(obj) == Shape:
                 return {
                     "pos": obj.sprites()[0],
@@ -130,11 +132,6 @@ class GameLoop:
             except:
                 return None
 
-        # set current_col
-        current_col = "green"
-        if is_player_1:
-            current_col = "red"
-
         # dump shapes
         with open("save_file1.json", "w") as file:
             json.dump(
@@ -142,6 +139,7 @@ class GameLoop:
                     "current_shape": self.current_shape,
                     "shapes": self.shape_handler.all_shapes,
                     "grid": self.grid,
+                    "points": self.points,
                 },
                 file,
                 default=serialize,
@@ -245,7 +243,7 @@ class GameLoop:
                                 case pygame.K_ESCAPE:
                                     resp = pause_screen(self.clock, screen)
                                     if resp:
-                                        self.save_game(is_player_1)
+                                        self.save_game()
 
                                     raise SystemExit
                                 case pygame.K_r:
@@ -270,6 +268,7 @@ class GameLoop:
                 for board in self.boards:
                     board.draw(screen)
                 self.shape_handler.draw_shapes(screen)
+                texts.draw(screen)
 
                 pygame.display.flip()
                 try:

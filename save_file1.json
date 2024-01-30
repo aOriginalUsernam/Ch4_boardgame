@@ -1,19 +1,112 @@
 {
     "current_shape": {
-        "sprites": {
-            "pos": [
-                91,
-                456
-            ],
-            "is_placed": false,
-            "col": "red"
-        },
-        "color": "red"
+        "pos": [
+            65,
+            456
+        ],
+        "is_placed": false,
+        "col": "red"
     },
     "shapes": [
         {
             "pos": [
-                91,
+                480,
+                431
+            ],
+            "is_placed": true,
+            "col": "red"
+        },
+        {
+            "pos": [
+                281,
+                381
+            ],
+            "is_placed": true,
+            "col": "red"
+        },
+        {
+            "pos": [
+                431,
+                331
+            ],
+            "is_placed": true,
+            "col": "green"
+        },
+        {
+            "pos": [
+                381,
+                381
+            ],
+            "is_placed": true,
+            "col": "green"
+        },
+        {
+            "pos": [
+                331,
+                531
+            ],
+            "is_placed": true,
+            "col": "red"
+        },
+        {
+            "pos": [
+                431,
+                631
+            ],
+            "is_placed": true,
+            "col": "green"
+        },
+        {
+            "pos": [
+                231,
+                531
+            ],
+            "is_placed": true,
+            "col": "red"
+        },
+        {
+            "pos": [
+                231,
+                231
+            ],
+            "is_placed": true,
+            "col": "green"
+        },
+        {
+            "pos": [
+                380,
+                281
+            ],
+            "is_placed": true,
+            "col": "red"
+        },
+        {
+            "pos": [
+                531,
+                281
+            ],
+            "is_placed": true,
+            "col": "green"
+        },
+        {
+            "pos": [
+                581,
+                431
+            ],
+            "is_placed": true,
+            "col": "red"
+        },
+        {
+            "pos": [
+                581,
+                581
+            ],
+            "is_placed": true,
+            "col": "green"
+        },
+        {
+            "pos": [
+                65,
                 456
             ],
             "is_placed": false,
@@ -21,19 +114,19 @@
         },
         {
             "pos": [
-                67,
-                797
-            ],
-            "is_placed": false,
-            "col": "red"
-        },
-        {
-            "pos": [
-                797,
+                846,
                 797
             ],
             "is_placed": false,
             "col": "green"
+        },
+        {
+            "pos": [
+                116,
+                797
+            ],
+            "is_placed": false,
+            "col": "red"
         }
     ],
     "grid": {
@@ -452,5 +545,9 @@
         "cell_size": 50,
         "cell_amount": 10,
         "margin": 230
+    },
+    "points": {
+        "red": 14,
+        "green": 11
     }
 }
