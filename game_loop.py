@@ -170,6 +170,10 @@ class GameLoop:
                             if (
                                 item.rect.collidepoint(x, y)
                                 or self.current_shape.shape == Shapes.S_BLOCK
+                                or self.current_shape.shape == Shapes.Z_BLOCK_R
+                                or self.current_shape.shape == Shapes.T_BLOCK
+                                or self.current_shape.shape == Shapes.T_BLOCK_R
+                                or self.current_shape.shape == Shapes.T_BLOCK_R2
                             ) and is_valid:
                                 (
                                     closest_grid_x_and_y,
@@ -198,6 +202,20 @@ class GameLoop:
                             match event.key:
                                 case pygame.K_ESCAPE:
                                     raise SystemExit
+                                case pygame.K_r:
+                                    if is_dragging_shape:
+                                        my_block = self.current_shape.block
+                                        rotate = True
+                                        self.shape_handler.all_shapes.remove(
+                                            self.current_shape
+                                        )
+                                        self.current_shape = (
+                                            self.shape_handler.generate_shape(
+                                                my_block,
+                                                self.current_shape.shape,
+                                                rotate,
+                                            )
+                                        )
 
                 # update screen
                 self.grid.draw_grid(screen)
