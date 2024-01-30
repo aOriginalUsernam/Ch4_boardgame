@@ -6,16 +6,17 @@ import pygame.surface
 
 
 class ShapeHandler:
-    def __init__(self) -> None:
+    def __init__(self, blocks: dict[Block]) -> None:
+        self.blocks = blocks
         self.all_shapes: list[Shape] = []
         self.current_shape = -1
         self.covered_cells = set()
 
-    def generate_shape(self, block: Block, shape = None) -> Shape:
+    def generate_shape(self, col: str, shape=None) -> Shape:
         if shape is None:
-            toReturn = Shape(block, Shapes(random.randint(0, 7)))
+            toReturn = Shape(self.blocks[col], Shapes(random.randint(0, 7)))
         else:
-            toReturn = Shape(block, shape)
+            toReturn = Shape(self.blocks[col], shape)
 
         self.all_shapes.append(toReturn)
         self.current_shape += 1
@@ -173,6 +174,5 @@ class ShapeHandler:
                         self.covered_cells.add(closest_index + 3 * width_and_height)
 
                 return result
-
 
         return True
