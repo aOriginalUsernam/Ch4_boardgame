@@ -2,11 +2,17 @@ from enum import Enum
 
 
 class Shapes(Enum):
-    TWOBYONE = 0
+    T_BLOCK = 0
     TWOBYTWO = 1
     S_BLOCK = 2
     Z_BLOCK = 3
     ONEBYONE = 4
     ONEBYTWO = 5
-    I_BLOCK_LYING = 6
-    I_BLOCK_STANDING = 7
+    I_BLOCK_STANDING = 6
+    I_BLOCK_LYING = 7
+    TWOBYONE = 8
+    S_BLOCK_R = 9
+    Z_BLOCK_R = 10
+    T_BLOCK_R = 11
+    T_BLOCK_R2 = 12
+    T_BLOCK_R3 = 13
