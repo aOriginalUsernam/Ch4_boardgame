@@ -5,13 +5,13 @@ from grid import *
 
 
 class Shape(pygame.sprite.Group):
-    def __init__(self, block: Block, shape: Shapes, rotate) -> None:
+    def __init__(self, block: Block, shape: Shapes, rotate, col:str) -> None:
+        self.col = col
         self.shape = shape
         self.block = block
         self.list_2d = self.create_shape(block, rotate)
         list_1d = []
         for row in self.list_2d:
-            
             for sprite in row:
                 if sprite is not None:
                     list_1d.append(sprite)

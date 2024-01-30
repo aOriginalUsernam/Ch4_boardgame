@@ -11,7 +11,7 @@ from board import *
 from menu import *
 
 number = 1
-with open("save_file1.json", 'w') as file:
+with open("save_file1.json", "w") as file:
     pass
 
 
@@ -105,7 +105,7 @@ class GameLoop:
         self.current_shape = self.shape_handler.generate_shape("red")
         self.current_shape.move(int(margin / 2), int(height / 2))
         print(self.current_shape.__dict__)
-        
+
         # make next shapes
         p1_next_shape = self.shape_handler.generate_shape("red")
 
@@ -115,25 +115,38 @@ class GameLoop:
     def load_game(self) -> bool:
         pass
 
-    def save_game(self) -> bool:
+    def save_game(self, is_player_1: bool) -> bool:
         def serialize(obj):
-            if type(obj) == Shape:
-                return str({"sprites": obj.sprites(), "color": "red"})
-            elif type(obj) == Block:
-                x = str([obj.rect.x, obj.rect.y])
-                return x
+            if type(obj) == Block:
+                return (obj.rect.x, obj.rect.y)
+            elif type(obj) == Shape:
+                return {
+                    "pos": obj.sprites()[0],
+                    "is_placed": obj.is_placed,
+                    "col": obj.col,
+                }
+            try:
+                return obj.__dict__
+            except:
+                return None
 
-        json_str = json.dumps(
-            {"current_shape": {"sprites": self.current_shape.sprites(), "color": "red"}}, default=serialize, indent=4
-        )
+        # set current_col
+        current_col = "green"
+        if is_player_1:
+            current_col = "red"
 
-        # game_state = {
-        #     "covered_cells": self.shape_handler.covered_cells,
-        #     "points": self.points,
-        #     "all_shapes": self.shape_handler.all_shapes
-        # }
-        with open("save_file1.json", 'w') as file:
-            json.dump(json_str, file)
+        # dump shapes
+        with open("save_file1.json", "w") as file:
+            json.dump(
+                {
+                    "current_shape": self.current_shape,
+                    "shapes": self.shape_handler.all_shapes,
+                    "grid": self.grid,
+                },
+                file,
+                default=serialize,
+                indent=4,
+            )
 
     def play_game(self, screen: pygame.surface) -> tuple:
         # main game loop
@@ -257,8 +270,6 @@ class GameLoop:
                 for board in self.boards:
                     board.draw(screen)
                 self.shape_handler.draw_shapes(screen)
-                
-                
 
                 pygame.display.flip()
                 try:
