@@ -54,18 +54,6 @@ class Image(pygame.sprite.Sprite):
             self.image.get_width() + 10,
             self.image.get_height() + 10,)
 
-    def rotate_block(self, shape, block):
-        shape = None
-        match block:
-            case Shapes.ONEBYONE:
-                return
-            
-            case Shapes.TWOBYONE:
-                shape = Shapes.ONEBYTWO      
-        ShapeHandler.generate_shape(block, shape)
-
-
-
 
 class Points(pygame.sprite.Sprite):
     def __init__(self, font: pygame.font.Font, points: int, x: int, y: int) -> None:

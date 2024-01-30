@@ -9,6 +9,10 @@ from grid import *
 from block import *
 from board import *
 
+number = 1
+with open("save_file1.json", 'w') as file:
+    pass
+
 
 class GameLoop:
     def __init__(
@@ -21,7 +25,8 @@ class GameLoop:
         cell_size: int,
         load_game: bool = False,
     ) -> None:
-        self.safe_path = os.path.join(os.getcwd(), "data\\safe_file.json")
+        self.save_path = os.path.join(os.getcwd(), f"data\\save_file{number}.json")
+
         if load_game:
             self.load_game(
                 clock, screen, width_and_height, margin, cell_amount, cell_size
@@ -98,7 +103,8 @@ class GameLoop:
         # make current shape
         self.current_shape = self.shape_handler.generate_shape("red")
         self.current_shape.move(int(margin / 2), int(height / 2))
-
+        print(self.current_shape.__dict__)
+        
         # make next shapes
         p1_next_shape = self.shape_handler.generate_shape("red")
 
@@ -109,7 +115,24 @@ class GameLoop:
         pass
 
     def save_game(self) -> bool:
-        pass
+        def serialize(obj):
+            if type(obj) == Shape:
+                return str({"sprites": obj.sprites(), "color": "red"})
+            elif type(obj) == Block:
+                x = str([obj.rect.x, obj.rect.y])
+                return x
+
+        json_str = json.dumps(
+            {"current_shape": {"sprites": self.current_shape.sprites(), "color": "red"}}, default=serialize, indent=4
+        )
+
+        # game_state = {
+        #     "covered_cells": self.shape_handler.covered_cells,
+        #     "points": self.points,
+        #     "all_shapes": self.shape_handler.all_shapes
+        # }
+        with open("save_file1.json", 'w') as file:
+            json.dump(json_str, file)
 
     def play_game(self, screen: pygame.surface) -> tuple:
         # main game loop
@@ -201,10 +224,13 @@ class GameLoop:
                         case pygame.KEYDOWN:
                             match event.key:
                                 case pygame.K_ESCAPE:
+                                    self.save_game()
                                     raise SystemExit
                                 case pygame.K_r:
                                     if is_dragging_shape:
-                                        my_block = self.current_shape.block
+                                        size = self.current_shape.block.size
+                                        image = self.current_shape.block.image
+                                        my_block = Block(x + 25, y + 25, size, image)
                                         rotate = True
                                         self.shape_handler.all_shapes.remove(
                                             self.current_shape
@@ -222,7 +248,8 @@ class GameLoop:
                 for board in self.boards:
                     board.draw(screen)
                 self.shape_handler.draw_shapes(screen)
-                texts.draw(screen)
+                
+                
 
                 pygame.display.flip()
                 try:

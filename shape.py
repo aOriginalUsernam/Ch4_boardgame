@@ -11,6 +11,7 @@ class Shape(pygame.sprite.Group):
         self.list_2d = self.create_shape(block, rotate)
         list_1d = []
         for row in self.list_2d:
+            
             for sprite in row:
                 if sprite is not None:
                     list_1d.append(sprite)

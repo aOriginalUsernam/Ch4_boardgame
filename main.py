@@ -17,7 +17,7 @@ def __main__() -> None:
     pygame.init()
     try:
         margin = 230
-        cell_amount = 8  # int(input("Board size: "))
+        cell_amount = 10  # int(input("Board size: "))
         cell_size = 50
         width = cell_amount * cell_size + 2 * margin
         height = cell_amount * cell_size + 2 * margin
