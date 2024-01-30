@@ -42,7 +42,7 @@ class Button(pygame.sprite.Sprite):
             self.image.get_width() + 10,
             self.image.get_height() + 10,
         )
-    
+
 
 class Image(pygame.sprite.Sprite):
     def __init__(self, image: pygame.image, x: int, y: int, size: int) -> None:
@@ -52,7 +52,8 @@ class Image(pygame.sprite.Sprite):
             x,
             y,
             self.image.get_width() + 10,
-            self.image.get_height() + 10,)
+            self.image.get_height() + 10,
+        )
 
 
 class Points(pygame.sprite.Sprite):
@@ -67,8 +68,8 @@ class Points(pygame.sprite.Sprite):
         )
         self.points = points
         self.font = font
-    
-    def add_points(self, shape, density):
+
+    def add_points(self, shape: Shapes, density: int):
         match shape:
             case Shapes.ONEBYONE:
                 self.points += 1
@@ -102,7 +103,7 @@ class Points(pygame.sprite.Sprite):
                     self.points += 4
                 else:
                     self.points += 5
-            
+
             case Shapes.S_BLOCK_R:
                 if density <= 30:
                     self.points += 2
@@ -122,7 +123,7 @@ class Points(pygame.sprite.Sprite):
                     self.points += 4
                 else:
                     self.points += 5
-            
+
             case Shapes.Z_BLOCK_R:
                 if density <= 30:
                     self.points += 2
@@ -154,7 +155,7 @@ class Points(pygame.sprite.Sprite):
                     self.points += 4
                 else:
                     self.points += 5
-            
+
             case Shapes.T_BLOCK_R:
                 if density <= 30:
                     self.points += 2
@@ -164,7 +165,7 @@ class Points(pygame.sprite.Sprite):
                     self.points += 4
                 else:
                     self.points += 5
-                    
+
             case Shapes.T_BLOCK_R2:
                 if density <= 30:
                     self.points += 2
@@ -174,7 +175,7 @@ class Points(pygame.sprite.Sprite):
                     self.points += 4
                 else:
                     self.points += 5
-            
+
             case Shapes.T_BLOCK_R3:
                 if density <= 30:
                     self.points += 2
