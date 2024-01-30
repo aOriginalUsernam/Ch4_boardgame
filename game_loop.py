@@ -33,6 +33,7 @@ class GameLoop:
                 clock, screen, width_and_height
             )
         else:
+            get_names(clock, screen)
             self.start_game(
                 clock, screen, width_and_height, margin, cell_amount, cell_size
             )
@@ -215,6 +216,7 @@ class GameLoop:
                                 or self.current_shape.shape == Shapes.T_BLOCK
                                 or self.current_shape.shape == Shapes.T_BLOCK_R
                                 or self.current_shape.shape == Shapes.T_BLOCK_R2
+                                or self.current_shape.shape == Shapes.L_BLOCK_R
                             ) and is_valid:
                                 (
                                     closest_grid_x_and_y,
@@ -245,7 +247,7 @@ class GameLoop:
                                     resp = pause_screen(self.clock, screen)
                                     if resp != 1:
                                         if resp == 2:
-                                            self.save_game(is_player_1)
+                                            self.save_game()
                                         raise SystemExit
                                 case pygame.K_r:
                                     if is_dragging_shape:

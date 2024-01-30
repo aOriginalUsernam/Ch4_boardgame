@@ -15,7 +15,7 @@ class ShapeHandler:
     def generate_shape(self, col: str, shape=None, rotate=None) -> Shape:
         if shape is None:
             toReturn = Shape(
-                self.blocks[col], Shapes(random.randint(0, 6)), rotate, col
+                self.blocks[col], Shapes(random.randint(0, 7)), rotate, col
             )
         else:
             toReturn = Shape(col, shape, rotate, col)
@@ -300,6 +300,82 @@ class ShapeHandler:
                         self.covered_cells.add(closest_index + width_and_height)
                         self.covered_cells.add(closest_index + width_and_height + 1)
                         self.covered_cells.add(closest_index + 2 * width_and_height)
+
+                return result
+
+            case Shapes.L_BLOCK:
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                    or closest_index + width_and_height + 1 in self.covered_cells
+                ):
+                    return False
+                else:
+                    result = not (
+                        x >= 205 + width_and_height * cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
+                    if result:
+                        self.covered_cells.add(closest_index)
+                        self.covered_cells.add(closest_index + width_and_height)
+                        self.covered_cells.add(closest_index + width_and_height + 1)
+
+                return result
+
+            case Shapes.L_BLOCK_R:
+                if (
+                    closest_index + 1 in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                    or closest_index + width_and_height + 1 in self.covered_cells
+                ):
+                    return False
+                else:
+                    result = not (
+                        x >= 205 + width_and_height * cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
+                    if result:
+                        self.covered_cells.add(closest_index + 1)
+                        self.covered_cells.add(closest_index + width_and_height)
+                        self.covered_cells.add(closest_index + width_and_height + 1)
+
+                return result
+
+            case Shapes.L_BLOCK_R2:
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + 1 in self.covered_cells
+                    or closest_index + width_and_height + 1 in self.covered_cells
+                ):
+                    return False
+                else:
+                    result = not (
+                        x >= 205 + width_and_height * cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
+                    if result:
+                        self.covered_cells.add(closest_index)
+                        self.covered_cells.add(closest_index + 1)
+                        self.covered_cells.add(closest_index + width_and_height + 1)
+
+                return result
+
+            case Shapes.L_BLOCK_R3:
+                if (
+                    closest_index in self.covered_cells
+                    or closest_index + 1 in self.covered_cells
+                    or closest_index + width_and_height in self.covered_cells
+                ):
+                    return False
+                else:
+                    result = not (
+                        x >= 205 + width_and_height * cell_size
+                        or y >= 205 + width_and_height * cell_size
+                    )
+                    if result:
+                        self.covered_cells.add(closest_index)
+                        self.covered_cells.add(closest_index + 1)
+                        self.covered_cells.add(closest_index + width_and_height)
 
                 return result
 

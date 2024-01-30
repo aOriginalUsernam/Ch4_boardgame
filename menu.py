@@ -89,3 +89,34 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
 
         pygame.display.flip()
         clock.tick(15)
+
+
+def get_names(clock: pygame.time.Clock, screen: pygame.surface.Surface, initial_text="", max_length=14) -> int:
+    font = pygame.font.SysFont("Georgia", 40, bold=True)
+    input_text = initial_text
+    input_rect = pygame.Rect(screen.get_width() / 100 * 32, screen.get_height() / 100 * 45, 350, 50)
+    active = True
+    
+    while active:
+        screen.fill((0, 0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return None
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    active = False
+                elif event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                else:
+                    if len(input_text) < max_length:
+                        input_text += event.unicode
+                        
+        pygame.draw.rect(screen, (255, 255, 255), input_rect, 2)
+        rendered_text = font.render(input_text, True, (255, 255, 255))
+        screen.blit(rendered_text, (input_rect.x + 5, input_rect.y + 5))
+
+        pygame.display.flip()
+        clock.tick(15)
+    
+    return input_text

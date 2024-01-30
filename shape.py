@@ -167,6 +167,50 @@ class Shape(pygame.sprite.Group):
                     [block.copy(x, 2*width + y), None]
                 ]
 
+            case Shapes.L_BLOCK:
+                if rotate:
+                    self.shape = Shapes.L_BLOCK_R
+                    return self.create_shape(block)
+
+                return [
+                    [block.copy(x, y), None],
+                    [block.copy(x, width + y), block.copy(width + x, width + y)]
+                ]
+
+            case Shapes.L_BLOCK_R:
+                if rotate:
+                    self.shape = Shapes.L_BLOCK_R2
+                    return self.create_shape(block)
+
+                return [
+                    [None, block.copy(width + x, y)],
+                    [block.copy(x, width + y), block.copy(width + x, width + y)]
+                ]
+            
+            case Shapes.L_BLOCK_R2:
+                if rotate:
+                    self.shape = Shapes.L_BLOCK_R3
+                    return self.create_shape(block)
+
+                return [
+                    [block.copy(x, y), block.copy(width + x, y)],
+                    [None, block.copy(width + x, width + y)]
+                ]
+            
+            case Shapes.L_BLOCK_R3:
+                if rotate:
+                    self.shape = Shapes.L_BLOCK
+                    return self.create_shape(block)
+
+                return [
+                    [block.copy(x, y), block.copy(width + x, y)],
+                    [block.copy(x, width + y), None]
+                ]
+
+
+
+
+
             case _:
                 raise ValueError(Shapes)
 

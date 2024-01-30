@@ -185,6 +185,38 @@ class Points(pygame.sprite.Sprite):
                     self.points += 4
                 else:
                     self.points += 5
+            
+            case Shapes.L_BLOCK:
+                if density <= 50:
+                    self.points += 1
+                elif density <= 85:
+                    self.points += 2
+                else:
+                    self.points += 3
+
+            case Shapes.L_BLOCK_R:
+                if density <= 50:
+                    self.points += 1
+                elif density <= 85:
+                    self.points += 2
+                else:
+                    self.points += 3
+
+            case Shapes.L_BLOCK_R2:
+                if density <= 50:
+                    self.points += 1
+                elif density <= 85:
+                    self.points += 2
+                else:
+                    self.points += 3
+
+            case Shapes.L_BLOCK_R3:
+                if density <= 50:
+                    self.points += 1
+                elif density <= 85:
+                    self.points += 2
+                else:
+                    self.points += 3
 
         self.image = self.font.render(f"{self.points}", True, "white")
         return self.points
