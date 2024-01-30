@@ -10,7 +10,7 @@ from block import *
 from board import *
 from menu import *
 
-number = 1
+
 with open("save_file1.json", "w") as file:
     pass
 
@@ -26,7 +26,7 @@ class GameLoop:
         cell_size: int,
         load_game: bool = False,
     ) -> None:
-        self.save_path = os.path.join(os.getcwd(), f"data\\save_file{number}.json")
+        self.save_path = os.path.join(os.getcwd(), f"data\\save_file.json")
 
         if load_game:
             self.load_game(
@@ -112,8 +112,89 @@ class GameLoop:
         p2_next_shape = self.shape_handler.generate_shape("green")
         self.next_shapes = {"red": p1_next_shape, "green": p2_next_shape}
 
-    def load_game(self) -> bool:
-        pass
+    def load_game(
+        self,
+        clock: pygame.time.Clock,
+        screen: pygame.display,
+        width_and_height: tuple[int, int],
+    ) -> bool:
+        with open(self.save_path, "r") as file:
+            file_dict = json.load(file)
+            file_current_shape = file_dict["current_shape"]
+            file_shapes = file_dict["shapes"]
+            file_grid = file_dict["grid"]
+            file_points = file_dict["points"]
+        self.clock = clock
+        self.width_and_height = width_and_height
+
+        # usefull data
+        width = width_and_height[0]
+        height = width_and_height[1]
+        margin = file_grid["margin"]
+        cell_size = file_grid["cell_size"]
+        cell_amount = file_grid["cell_amount"]
+
+        # create grid
+        self.grid = Grid(cell_size, cell_amount, margin)
+
+        # draw grid
+        self.grid.draw_grid(screen)
+
+        # make timer
+        font = pygame.font.Font(None, 36)
+        timer = Timer(font, int(width / 2), 36 / 2, 15)
+        self.timer = timer
+
+        # points
+        points_p1 = Points(font, file_points["red"], 0.5 * margin, 50)
+        points_p2 = Points(font, file_points["green"], width - 0.5 * margin, 50)
+        self.points = {"red": points_p1, "green": points_p2}
+
+        # MAKE PLAYER BOARDs
+        board_col = pygame.Color(10, 10, 10)
+        p1_board = Board(board_col, 0, 0, margin, height)
+        p2_board = Board(board_col, width - margin, 0, margin, height)
+        self.boards = (p1_board, p2_board)
+
+        # load images
+        r_block_img = pygame.image.load(
+            os.path.join(os.getcwd(), "images\\block_red.png")
+        )
+        g_block_img = pygame.image.load(
+            os.path.join(os.getcwd(), "images\\block_green.png")
+        )
+        rotate_image = pygame.image.load(
+            os.path.join(os.getcwd(), "images\\rotate.png")
+        )
+        rotate_img_model = Image(rotate_image, width / 2, 100, 30)
+        self.rotate_img = rotate_img_model
+
+        # make block + shape handler
+        red_block = Block(
+            int(margin / 2),
+            int(height - margin / 2),
+            cell_size - 0.5,
+            r_block_img,
+        )
+        green_block = Block(
+            width - int(margin / 2),
+            int(height - margin / 2),
+            cell_size - 0.5,
+            g_block_img,
+        )
+        self.shape_handler = ShapeHandler({"red": red_block, "green": green_block})
+
+        # generate shapes
+        for shape in file_shapes:
+            shape_type = Shapes[shape["shape_type"]]
+            game_shape = self.shape_handler.generate_shape(shape["col"], shape_type)
+            game_shape.move(shape["pos"][0], shape["pos"][1])
+            if shape == file_current_shape:
+                self.current_shape = game_shape
+            elif shape["is_placed"]:
+                game_shape.is_placed = True
+            else:
+                self.next_shapes[shape["col"]] = game_shape
 
     def save_game(self) -> bool:
         def serialize(obj):
@@ -126,6 +207,7 @@ class GameLoop:
                     "pos": obj.sprites()[0],
                     "is_placed": obj.is_placed,
                     "col": obj.col,
+                    "shape_type": obj.shape.name,
                 }
             try:
                 return obj.__dict__
@@ -133,7 +215,7 @@ class GameLoop:
                 return None
 
         # dump shapes
-        with open("save_file1.json", "w") as file:
+        with open(self.save_path, "w") as file:
             json.dump(
                 {
                     "current_shape": self.current_shape,
