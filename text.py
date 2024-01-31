@@ -7,7 +7,7 @@ class Timer(pygame.sprite.Sprite):
     def __init__(self, font: pygame.font.Font, x: int, y: int, time: int = 30) -> None:
         super().__init__()
         self.font = font
-        self.image = font.render(f"[{time}]", True, "white").convert_alpha()
+        self.image = self.font.render(f"{time} seconds", True, "white").convert_alpha()
         self.rect = pygame.Rect(
             x,
             y,
@@ -17,6 +17,7 @@ class Timer(pygame.sprite.Sprite):
         self.start_time = time
         self.time = time
         self.curent_tick = 0
+        self.rect.centerx = x
 
     def tick(self):
         self.curent_tick += 1
@@ -25,7 +26,8 @@ class Timer(pygame.sprite.Sprite):
             self.time -= 1
             if self.time < 0:
                 raise SystemExit
-            self.image = self.font.render(f"{self.time} seconds", True, "white")
+            self.image = self.font.render(f"{self.time} seconds", True, "white").convert_alpha()
+        
 
     def reset(self):
         self.time = self.start_time
@@ -55,6 +57,7 @@ class Image(pygame.sprite.Sprite):
             self.image.get_width() + 10,
             self.image.get_height() + 10,
         )
+        self.rect.centerx = x
 
 
 class Text(pygame.sprite.Sprite):

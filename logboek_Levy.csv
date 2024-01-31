@@ -10,3 +10,5 @@ date,activity,time_spent,details
 29-01-2024,coderen en bugfixes,3h,wat extra shapes toegevoegd en een aantal bugs gefixt. je kan nu ook niet meer een gerotatede shape krijgen je krijgt gewoon de base-shape en die kan je dan rotaten.
 30-01-2024,coderen en testen en alles,3h,ik heb een pause menu gemaakt met een resume button een save button en een quit button en die werken allemaal.
 30-01-2024,coderen en nog meer testen,2h,het start menu aangepast zodat er nu ook load game in staat en ik heb nog een vorm toegevoegd
+31-01-2024,coderen en heel veel testen,2h,eindscherm gemaakt die de winner laat zien; hij laat ook het aantal punten zien als er een winner is
+31-01-2024,bugfixen,1h,'bugs' gefixt zoals tekst die niet in het midden van het scherm staat

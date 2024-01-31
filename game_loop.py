@@ -83,7 +83,7 @@ class GameLoop:
         rotate_image = pygame.image.load(
             os.path.join(os.getcwd(), "images\\rotate.png")
         )
-        rotate_img_model = Image(rotate_image, width / 2, 100, 30)
+        rotate_img_model = Image(rotate_image, width / 2, 100, 80)
         self.rotate_img = rotate_img_model
 
         # make block + shape handler
@@ -110,6 +110,8 @@ class GameLoop:
 
         p2_next_shape = self.shape_handler.generate_shape("green")
         self.next_shapes = {"red": p1_next_shape, "green": p2_next_shape}
+        
+        self.is_player_1 = True
 
     def load_game(
         self,
@@ -173,7 +175,7 @@ class GameLoop:
         rotate_image = pygame.image.load(
             os.path.join(os.getcwd(), "images\\rotate.png")
         )
-        rotate_img_model = Image(rotate_image, width / 2, 100, 30)
+        rotate_img_model = Image(rotate_image, width / 2, 100, 80)
         self.rotate_img = rotate_img_model
 
         # make block + shape handler
@@ -199,6 +201,7 @@ class GameLoop:
             game_shape.move(shape["pos"][0], shape["pos"][1])
             if shape == file_current_shape:
                 self.current_shape = game_shape
+                self.is_player_1 = self.current_shape.col == "red"
             elif shape["is_placed"]:
                 game_shape.is_placed = True
             else:
@@ -251,7 +254,7 @@ class GameLoop:
         # main game loop
         game_over = False
         is_dragging_shape = False
-        is_player_1 = True
+
         density = 0
         total_cells = self.grid.cell_amount**2
 
@@ -283,7 +286,7 @@ class GameLoop:
                 if self.current_shape.is_placed:
                     density = len(self.shape_handler.covered_cells) / total_cells * 100
                     self.timer.reset()
-                    if is_player_1:
+                    if self.is_player_1:
                         self.points["red"].add_points(self.current_shape.shape, density)
                         self.current_shape = self.next_shapes["green"]
                         self.current_shape.move(
@@ -293,7 +296,7 @@ class GameLoop:
                         self.next_shapes["green"] = self.shape_handler.generate_shape(
                             "green"
                         )
-                        is_player_1 = False
+                        self.is_player_1 = False
                     else:
                         self.points["green"].add_points(
                             self.current_shape.shape, density
@@ -303,7 +306,7 @@ class GameLoop:
                         self.next_shapes["red"] = self.shape_handler.generate_shape(
                             "red"
                         )
-                        is_player_1 = True
+                        self.is_player_1 = True
 
                 # player input
                 if is_dragging_shape:
