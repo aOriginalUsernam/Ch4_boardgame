@@ -45,8 +45,8 @@ class GameLoop:
         cell_size: int,
     ) -> bool:
         self.clock = clock
-        self.name_player1 = get_names(clock, screen)
-        self.name_player2 = get_names(clock, screen)
+        self.name_player1 = get_names(clock, screen, "Name player one")
+        self.name_player2 = get_names(clock, screen, "Name player two")
         # self.margin = margin
         # self.cell_amount = cell_amount
         self.grid = Grid(cell_size, cell_amount, margin)

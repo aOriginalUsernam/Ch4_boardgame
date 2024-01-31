@@ -16,15 +16,15 @@ from menu import *
 def __main__() -> None:
     pygame.init()
     try:
+        full_screen_size = pyautogui.size()
+        screen = pygame.display.set_mode((full_screen_size[0], full_screen_size[1]))
+        clock = pygame.time.Clock()
+        cell_amount = get_board_size(clock, screen)
         margin = 230
-        cell_amount = 10  # int(input("Board size: "))
         cell_size = 50
         width = cell_amount * cell_size + 2 * margin
         height = cell_amount * cell_size + 2 * margin
-
-        full_screen_size = pyautogui.size()
         screen = pygame.display.set_mode((width, height))
-        clock = pygame.time.Clock()
 
         # make header
         pygame.display.set_caption("boardgame")
