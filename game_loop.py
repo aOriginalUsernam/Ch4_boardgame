@@ -59,7 +59,7 @@ class GameLoop:
         height = width_and_height[1]
         # make timer
         font = pygame.font.Font(None, 36)
-        timer = Timer(font, int(width / 2), 36 / 2, 15)
+        timer = Timer(font, int(width / 2), 36 / 2, 2)
         self.timer = timer
 
         # points
@@ -279,6 +279,7 @@ class GameLoop:
                             win_screen(
                                 self.clock,
                                 screen,
+                                self.grid.cell_amount,
                                 self.points["red"].points,
                                 self.name_player1,
                             )
@@ -286,11 +287,12 @@ class GameLoop:
                             win_screen(
                                 self.clock,
                                 screen,
+                                self.grid.cell_amount,
                                 self.points["green"].points,
                                 self.name_player2,
                             )
                         else:
-                            win_screen(self.clock, screen)
+                            win_screen(self.clock, screen, self.grid.cell_amount)
 
                 # if shape is placed generate new shape
                 if self.current_shape.is_placed:

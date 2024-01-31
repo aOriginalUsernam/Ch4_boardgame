@@ -102,14 +102,19 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
 
 
 def win_screen(
-    clock: pygame.time.Clock, screen: pygame.surface.Surface, points=None, winner=None
+    clock: pygame.time.Clock, screen: pygame.surface.Surface, cell_amount: tuple, points=None, winner=None
 ) -> int:
     yay_sound = pygame.mixer.Sound(os.path.join(os.getcwd(), "sounds\\yay.mp3"))
     trombone_sound = pygame.mixer.Sound(
         os.path.join(os.getcwd(), "sounds\\trombone.mp3")
     )
 
-    font = pygame.font.SysFont("Georgia", 80, bold=True)
+    if cell_amount <= 9:
+        size = cell_amount * 8
+    else:
+        size = cell_amount * 6
+
+    font = pygame.font.SysFont("Georgia", size, bold=True)
 
     # checks if its a draw or not
     if winner != None:
