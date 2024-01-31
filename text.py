@@ -42,6 +42,7 @@ class Button(pygame.sprite.Sprite):
             self.image.get_width() + 10,
             self.image.get_height() + 10,
         )
+        self.rect.centerx = x
 
 
 class Image(pygame.sprite.Sprite):
@@ -55,11 +56,22 @@ class Image(pygame.sprite.Sprite):
             self.image.get_height() + 10,
         )
 
-# class PlayerText(pygame.sprite.Sprite):
-#     def __init__(self, font: pygame.font.Sysfont("Georgia"), x: int, y: int, size: int):
-#         pygame.sprite.Sprite.__init__(self)
-#         self.image = font.render(str("Player 1 name"), True, "white").convert_alpha()
-#         self.rect
+
+class Text(pygame.sprite.Sprite):
+    def __init__(self, font: pygame.font.Font, text: str, x: int, y: int) -> None:
+        pygame.sprite.Sprite.__init__(self)
+        self.image = font.render(str(text), True, "white").convert_alpha()
+        self.rect = pygame.Rect(
+            x,
+            y,
+            self.image.get_width() + 10,
+            self.image.get_height() + 10,
+        )
+        self.text = text
+        self.font = font
+        self.rect.centerx = x
+
+
 
 class Points(pygame.sprite.Sprite):
     def __init__(self, font: pygame.font.Font, points: int, x: int, y: int) -> None:

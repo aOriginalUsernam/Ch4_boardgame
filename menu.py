@@ -1,6 +1,6 @@
 import pygame
 import os
-from text import Button
+from text import Button, Text
 import time
 
 pygame.init()
@@ -19,12 +19,12 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
     font = pygame.font.SysFont("Georgia", 80, bold=True)
 
     # start button
-    start_btn = Button(font, "START", screen.get_width() / 100 * 35, screen.get_height() / 100 * 25)
+    start_btn = Button(font, "START", screen.get_width() / 2, screen.get_height() / 100 * 25)
 
-    load_btn = Button(font, "LOAD GAME", screen.get_width() / 100 * 22, screen.get_height() / 100 * 45)
+    load_btn = Button(font, "LOAD GAME", screen.get_width() / 2, screen.get_height() / 100 * 45)
 
     # quit button
-    quit_btn = Button(font, "QUIT", screen.get_width() / 100 * 38, screen.get_height() / 100 * 65)
+    quit_btn = Button(font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65)
 
     btns = pygame.sprite.Group()
     btns.add(start_btn, load_btn, quit_btn)
@@ -57,12 +57,12 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
     font = pygame.font.SysFont("Georgia", 80, bold=True)
 
     # start button
-    resume_btn = Button(font, "RESUME", screen.get_width() / 100 * 30, screen.get_height() / 100 * 25)
+    resume_btn = Button(font, "RESUME", screen.get_width() / 2, screen.get_height() / 100 * 25)
 
-    save_btn = Button(font, "SAVE", screen.get_width() / 100 * 38, screen.get_height()/ 100 * 45)
+    save_btn = Button(font, "SAVE", screen.get_width() / 2, screen.get_height()/ 100 * 45)
 
     # quit button
-    quit_btn = Button(font, "QUIT", screen.get_width() / 100 * 38, screen.get_height() / 100 * 65)
+    quit_btn = Button(font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65)
 
     btns = pygame.sprite.Group()
     btns.add(resume_btn, save_btn, quit_btn)
@@ -90,6 +90,34 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
         pygame.display.flip()
         clock.tick(15)
 
+def win_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface, winner: str) -> int:
+    # make buttons
+    font = pygame.font.SysFont("Georgia", 80, bold=True)
+
+    # start button
+    winner = Text(font, f"Winner is {winner}", screen.get_width() / 2, 200)
+
+    # quit button
+    quit_btn = Button(font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65)
+
+    btns = pygame.sprite.Group()
+    btns.add(winner, quit_btn)
+    while True:
+        screen.fill("black")
+        for event in pygame.event.get():
+            match event.type:
+                case pygame.QUIT:
+                    return 0
+                case pygame.MOUSEBUTTONUP:
+                    if quit_btn in btns:
+                        if quit_btn.rect.collidepoint(event.pos):
+                            pygame.quit()
+                            return 0
+        # draw start buttons
+        btns.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(15)
 
 def get_names(clock: pygame.time.Clock, screen: pygame.surface.Surface, initial_text="", max_length=14) -> int:
     font = pygame.font.SysFont("Georgia", 40, bold=True)
