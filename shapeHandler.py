@@ -6,11 +6,12 @@ import pygame.surface
 
 
 class ShapeHandler:
-    def __init__(self, blocks: dict[Block]) -> None:
+    def __init__(self, blocks: dict[Block], margin) -> None:
         self.blocks = blocks
         self.all_shapes: list[Shape] = []
         self.current_shape = -1
         self.covered_cells = set()
+        self.margin = margin
 
     def generate_shape(self, col: str, shape=None, rotate=None) -> Shape:
         if shape is None:
@@ -50,10 +51,11 @@ class ShapeHandler:
                 if (
                     closest_index in self.covered_cells
                     or closest_index + 1 in self.covered_cells
+                    or closest_index + 1 % 10 == 0
                 ):
                     return False
                 else:
-                    result = not x >= 205 + width_and_height * cell_size
+                    result = not x >= self.margin + width_and_height * cell_size
                     if result:
                         self.covered_cells.add(closest_index)
                         self.covered_cells.add(closest_index + 1)
@@ -70,8 +72,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -88,7 +90,7 @@ class ShapeHandler:
                 ):
                     return False
                 else:
-                    result = not y >= 205 + width_and_height * cell_size
+                    result = not y >= self.margin + width_and_height * cell_size
                     if result:
                         self.covered_cells.add(closest_index)
                         self.covered_cells.add(closest_index + width_and_height)
@@ -105,8 +107,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size - cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size - cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index + 1)
@@ -126,8 +128,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size - cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size - cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -147,8 +149,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size - cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size - cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -168,8 +170,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size - cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size - cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index + 1)
@@ -189,7 +191,7 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size - 2 * cell_size
+                        x >= self.margin + width_and_height * cell_size - 2 * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -209,7 +211,7 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        y >= 205 + width_and_height * cell_size - 2 * cell_size
+                        y >= self.margin + width_and_height * cell_size - 2 * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -229,8 +231,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size - cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size - cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index + 1)
@@ -250,8 +252,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size - cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size - cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index + 1)
@@ -271,8 +273,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size - cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size - cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -292,8 +294,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size - cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size - cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -312,8 +314,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -331,8 +333,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index + 1)
@@ -350,8 +352,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)
@@ -369,8 +371,8 @@ class ShapeHandler:
                     return False
                 else:
                     result = not (
-                        x >= 205 + width_and_height * cell_size
-                        or y >= 205 + width_and_height * cell_size
+                        x >= self.margin + width_and_height * cell_size
+                        or y >= self.margin + width_and_height * cell_size
                     )
                     if result:
                         self.covered_cells.add(closest_index)

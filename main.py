@@ -22,6 +22,7 @@ def __main__() -> None:
         cell_amount = get_board_size(clock, screen)
         margin = 230
         cell_size = 50
+        margin = cell_size * 4 + 20
         width = cell_amount * cell_size + 2 * margin
         height = cell_amount * cell_size + 2 * margin
         screen = pygame.display.set_mode((width, height))
