@@ -31,7 +31,6 @@ class GameLoop:
         if load_game:
             self.load_game(clock, screen, width_and_height)
         else:
-            get_names(clock, screen)
             self.start_game(
                 clock, screen, width_and_height, margin, cell_amount, cell_size
             )
