@@ -5,7 +5,7 @@ from grid import *
 
 
 class Shape(pygame.sprite.Group):
-    def __init__(self, block: Block, shape: Shapes, rotate, col:str) -> None:
+    def __init__(self, block: Block, shape: Shapes, rotate, col: str) -> None:
         self.col = col
         self.shape = shape
         self.block = block
@@ -17,8 +17,10 @@ class Shape(pygame.sprite.Group):
                     list_1d.append(sprite)
         pygame.sprite.Group.__init__(self, list_1d)
         self.is_placed = False
+        self.x = block.rect.x
+        self.y = block.rect.y
 
-    def create_shape(self, block: Block, rotate = False):
+    def create_shape(self, block: Block, rotate=False):
         x = block.rect.x
         y = block.rect.y
         width = block.rect.width
@@ -71,9 +73,8 @@ class Shape(pygame.sprite.Group):
                 return [
                     [block.copy(x, y), None],
                     [block.copy(x, width + y), block.copy(width + x, width + y)],
-                    [None, block.copy(width + x, 2*width + y)
-                     ],
-                    ]
+                    [None, block.copy(width + x, 2 * width + y)],
+                ]
             case Shapes.Z_BLOCK:
                 if rotate:
                     self.shape = Shapes.Z_BLOCK_R
@@ -96,9 +97,8 @@ class Shape(pygame.sprite.Group):
                 return [
                     [None, block.copy(width + x, y)],
                     [block.copy(x, width + y), block.copy(width + x, width + y)],
-                    [block.copy(x, 2*width + y), None
-                     ],
-                    ]
+                    [block.copy(x, 2 * width + y), None],
+                ]
 
             case Shapes.I_BLOCK_LYING:
                 if rotate:
@@ -132,9 +132,13 @@ class Shape(pygame.sprite.Group):
 
                 return [
                     [None, block.copy(width + x, y), None],
-                    [block.copy(x, width + y), block.copy(width + x, width + y), block.copy(2*width + x, width + y)]
+                    [
+                        block.copy(x, width + y),
+                        block.copy(width + x, width + y),
+                        block.copy(2 * width + x, width + y),
+                    ],
                 ]
-            
+
             case Shapes.T_BLOCK_R:
                 if rotate:
                     self.shape = Shapes.T_BLOCK_R2
@@ -143,17 +147,21 @@ class Shape(pygame.sprite.Group):
                 return [
                     [None, block.copy(width + x, y)],
                     [block.copy(x, width + y), block.copy(width + x, width + y)],
-                    [None, block.copy(width + x, 2*width + y)]
+                    [None, block.copy(width + x, 2 * width + y)],
                 ]
-            
+
             case Shapes.T_BLOCK_R2:
                 if rotate:
                     self.shape = Shapes.T_BLOCK_R3
                     return self.create_shape(block)
 
                 return [
-                    [block.copy(x, y), block.copy(width + x, y), block.copy(2*width + x, y)],
-                    [None, block.copy(width + x, width + y)]
+                    [
+                        block.copy(x, y),
+                        block.copy(width + x, y),
+                        block.copy(2 * width + x, y),
+                    ],
+                    [None, block.copy(width + x, width + y)],
                 ]
 
             case Shapes.T_BLOCK_R3:
@@ -164,7 +172,7 @@ class Shape(pygame.sprite.Group):
                 return [
                     [block.copy(x, y), None],
                     [block.copy(x, width + y), block.copy(width + x, width + y)],
-                    [block.copy(x, 2*width + y), None]
+                    [block.copy(x, 2 * width + y), None],
                 ]
 
             case Shapes.L_BLOCK:
@@ -174,7 +182,7 @@ class Shape(pygame.sprite.Group):
 
                 return [
                     [block.copy(x, y), None],
-                    [block.copy(x, width + y), block.copy(width + x, width + y)]
+                    [block.copy(x, width + y), block.copy(width + x, width + y)],
                 ]
 
             case Shapes.L_BLOCK_R:
@@ -184,9 +192,9 @@ class Shape(pygame.sprite.Group):
 
                 return [
                     [None, block.copy(width + x, y)],
-                    [block.copy(x, width + y), block.copy(width + x, width + y)]
+                    [block.copy(x, width + y), block.copy(width + x, width + y)],
                 ]
-            
+
             case Shapes.L_BLOCK_R2:
                 if rotate:
                     self.shape = Shapes.L_BLOCK_R3
@@ -194,9 +202,9 @@ class Shape(pygame.sprite.Group):
 
                 return [
                     [block.copy(x, y), block.copy(width + x, y)],
-                    [None, block.copy(width + x, width + y)]
+                    [None, block.copy(width + x, width + y)],
                 ]
-            
+
             case Shapes.L_BLOCK_R3:
                 if rotate:
                     self.shape = Shapes.L_BLOCK
@@ -204,12 +212,8 @@ class Shape(pygame.sprite.Group):
 
                 return [
                     [block.copy(x, y), block.copy(width + x, y)],
-                    [block.copy(x, width + y), None]
+                    [block.copy(x, width + y), None],
                 ]
-
-
-
-
 
             case _:
                 raise ValueError(Shapes)
@@ -217,6 +221,8 @@ class Shape(pygame.sprite.Group):
     def move(self, x: int, y: int) -> None:
         if self.is_placed:
             return
+        self.x = x
+        self.y = y
         add_y = 0
         for row in self.list_2d:
             add_x = 0

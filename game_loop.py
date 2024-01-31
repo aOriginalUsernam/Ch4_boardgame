@@ -33,9 +33,7 @@ class GameLoop:
         self.name_player2 = name_player2
 
         if load_game:
-            self.load_game(
-                clock, screen, width_and_height
-            )
+            self.load_game(clock, screen, width_and_height)
         else:
             self.start_game(
                 clock, screen, width_and_height, margin, cell_amount, cell_size
@@ -121,12 +119,15 @@ class GameLoop:
         screen: pygame.display,
         width_and_height: tuple[int, int],
     ) -> bool:
-        with open(self.save_path, "r") as file:
-            file_dict = json.load(file)
-            file_current_shape = file_dict["current_shape"]
-            file_shapes = file_dict["shapes"]
-            file_grid = file_dict["grid"]
-            file_points = file_dict["points"]
+        try:
+            with open(self.save_path, "r") as file:
+                file_dict = json.load(file)
+                file_current_shape = file_dict["current_shape"]
+                file_shapes = file_dict["shapes"]
+                file_grid = file_dict["grid"]
+                file_points = file_dict["points"]
+        except:
+            raise SystemExit("no valid safe_file")
         self.clock = clock
         self.width_and_height = width_and_height
 
@@ -136,6 +137,7 @@ class GameLoop:
         margin = file_grid["margin"]
         cell_size = file_grid["cell_size"]
         cell_amount = file_grid["cell_amount"]
+        covered_cells = set(file_dict["covered_cells"])
 
         # create grid
         self.grid = Grid(cell_size, cell_amount, margin)
@@ -188,6 +190,7 @@ class GameLoop:
         self.shape_handler = ShapeHandler({"red": red_block, "green": green_block})
 
         # generate shapes
+        self.next_shapes = {}
         for shape in file_shapes:
             shape_type = Shapes[shape["shape_type"]]
             game_shape = self.shape_handler.generate_shape(shape["col"], shape_type)
@@ -199,19 +202,23 @@ class GameLoop:
             else:
                 self.next_shapes[shape["col"]] = game_shape
 
+        self.shape_handler.covered_cells = covered_cells
+
     def save_game(self) -> bool:
         def serialize(obj):
             if type(obj) == Block:
-                return (obj.rect.x, obj.rect.y)
+                return (obj.rect.centerx, obj.rect.centery)
             elif type(obj) == Points:
                 return obj.points
             elif type(obj) == Shape:
                 return {
-                    "pos": obj.sprites()[0],
+                    "pos": (obj.x, obj.y),
                     "is_placed": obj.is_placed,
                     "col": obj.col,
                     "shape_type": obj.shape.name,
                 }
+            elif type(obj) == set:
+                return list(obj)
             try:
                 return obj.__dict__
             except:
@@ -223,6 +230,7 @@ class GameLoop:
                 {
                     "current_shape": self.current_shape,
                     "shapes": self.shape_handler.all_shapes,
+                    "covered_cells": self.shape_handler.covered_cells,
                     "grid": self.grid,
                     "points": self.points,
                 },
@@ -338,16 +346,13 @@ class GameLoop:
                                         raise SystemExit
                                 case pygame.K_r:
                                     if is_dragging_shape:
-                                        size = self.current_shape.block.size
-                                        image = self.current_shape.block.image
-                                        my_block = Block(x + 25, y + 25, size, image)
                                         rotate = True
                                         self.shape_handler.all_shapes.remove(
                                             self.current_shape
                                         )
                                         self.current_shape = (
                                             self.shape_handler.generate_shape(
-                                                my_block,
+                                                self.current_shape.col,
                                                 self.current_shape.shape,
                                                 rotate,
                                             )

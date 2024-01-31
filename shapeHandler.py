@@ -18,7 +18,7 @@ class ShapeHandler:
                 self.blocks[col], Shapes(random.randint(0, 7)), rotate, col
             )
         else:
-            toReturn = Shape(col, shape, rotate, col)
+            toReturn = Shape(self.blocks[col], shape, rotate, col)
 
         self.all_shapes.append(toReturn)
         self.current_shape += 1
