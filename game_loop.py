@@ -24,7 +24,7 @@ class GameLoop:
         margin: int,
         cell_amount: int,
         cell_size: int,
-        load_game: bool = False
+        load_game: bool = False,
     ) -> None:
         self.save_path = os.path.join(os.getcwd(), f"data\\save_file.json")
 
@@ -153,6 +153,10 @@ class GameLoop:
         points_p2 = Points(font, file_points["green"], width - 0.5 * margin, 50)
         self.points = {"red": points_p1, "green": points_p2}
 
+        # player names
+        self.name_player1 = file_dict["players"]["red"]
+        self.name_player2 = file_dict["players"]["green"]
+
         # MAKE PLAYER BOARDs
         board_col = pygame.Color(10, 10, 10)
         p1_board = Board(board_col, 0, 0, margin, height)
@@ -231,6 +235,7 @@ class GameLoop:
                     "covered_cells": self.shape_handler.covered_cells,
                     "grid": self.grid,
                     "points": self.points,
+                    "players": {"red": self.name_player1, "green": self.name_player2},
                 },
                 file,
                 default=serialize,
@@ -258,9 +263,19 @@ class GameLoop:
                 if game_over:
                     while True:
                         if self.points["red"].points > self.points["green"].points:
-                            win_screen(self.clock, screen, self.points["red"].points, self.name_player1)
+                            win_screen(
+                                self.clock,
+                                screen,
+                                self.points["red"].points,
+                                self.name_player1,
+                            )
                         elif self.points["red"].points < self.points["green"].points:
-                            win_screen(self.clock, screen, self.points["green"].points, self.name_player2)
+                            win_screen(
+                                self.clock,
+                                screen,
+                                self.points["green"].points,
+                                self.name_player2,
+                            )
                         else:
                             win_screen(self.clock, screen)
 
