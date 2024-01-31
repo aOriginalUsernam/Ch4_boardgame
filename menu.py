@@ -1,6 +1,6 @@
 import pygame
 import os
-from text import Button
+from text import Button, Text
 import time
 
 
@@ -15,16 +15,16 @@ def start_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
 
     # start button
     start_btn = Button(
-        font, "START", screen.get_width() / 100 * 35, screen.get_height() / 100 * 25
+        font, "START", screen.get_width() / 2, screen.get_height() / 100 * 25
     )
 
     load_btn = Button(
-        font, "LOAD GAME", screen.get_width() / 100 * 22, screen.get_height() / 100 * 45
+        font, "LOAD GAME", screen.get_width() / 2, screen.get_height() / 100 * 45
     )
 
     # quit button
     quit_btn = Button(
-        font, "QUIT", screen.get_width() / 100 * 38, screen.get_height() / 100 * 65
+        font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65
     )
 
     btns = pygame.sprite.Group()
@@ -62,16 +62,16 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
 
     # start button
     resume_btn = Button(
-        font, "RESUME", screen.get_width() / 100 * 30, screen.get_height() / 100 * 25
+        font, "RESUME", screen.get_width() / 2, screen.get_height() / 100 * 25
     )
 
     save_btn = Button(
-        font, "SAVE", screen.get_width() / 100 * 38, screen.get_height() / 100 * 45
+        font, "SAVE", screen.get_width() / 2, screen.get_height() / 100 * 45
     )
 
     # quit button
     quit_btn = Button(
-        font, "QUIT", screen.get_width() / 100 * 38, screen.get_height() / 100 * 65
+        font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65
     )
 
     btns = pygame.sprite.Group()
@@ -95,6 +95,128 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
                             pygame.quit()
                             return 0
         # draw start buttons
+        btns.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(15)
+
+
+def win_screen(
+    clock: pygame.time.Clock, screen: pygame.surface.Surface, points=None, winner=None
+) -> int:
+    yay_sound = pygame.mixer.Sound(os.path.join(os.getcwd(), "sounds\\yay.mp3"))
+    trombone_sound = pygame.mixer.Sound(
+        os.path.join(os.getcwd(), "sounds\\trombone.mp3")
+    )
+
+    font = pygame.font.SysFont("Georgia", 80, bold=True)
+
+    # checks if its a draw or not
+    if winner != None:
+        yay_sound.play()
+        winner_text = Text(font, f"Winner is {winner}", screen.get_width() / 2, 200)
+
+        if points == 1:
+            points_text = Text(
+                font, f"with {points} point", screen.get_width() / 2, 300
+            )
+        else:
+            points_text = Text(
+                font, f"with {points} points", screen.get_width() / 2, 300
+            )
+
+        quit_btn = Button(
+            font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65
+        )
+
+    else:
+        trombone_sound.play()
+        winner_text = Text(font, f"Game ended in a draw", screen.get_width() / 2, 200)
+        quit_btn = Button(
+            font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65
+        )
+
+    btns = pygame.sprite.Group()
+
+    if points == None:
+        btns.add(winner_text, quit_btn)
+    else:
+        btns.add(winner_text, points_text, quit_btn)
+
+    while True:
+        screen.fill("black")
+        for event in pygame.event.get():
+            match event.type:
+                case pygame.QUIT:
+                    return 0
+                case pygame.MOUSEBUTTONUP:
+                    if quit_btn in btns:
+                        if quit_btn.rect.collidepoint(event.pos):
+                            raise SystemExit
+                            # pygame.quit()
+                            # return 0
+        # draw buttons n text
+        btns.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(15)
+
+
+def win_screen(
+    clock: pygame.time.Clock, screen: pygame.surface.Surface, points=None, winner=None
+) -> int:
+    yay_sound = pygame.mixer.Sound(os.path.join(os.getcwd(), "sounds\\yay.mp3"))
+    trombone_sound = pygame.mixer.Sound(
+        os.path.join(os.getcwd(), "sounds\\trombone.mp3")
+    )
+
+    font = pygame.font.SysFont("Georgia", 80, bold=True)
+
+    # checks if its a draw or not
+    if winner != None:
+        yay_sound.play()
+        winner_text = Text(font, f"Winner is {winner}", screen.get_width() / 2, 200)
+
+        if points == 1:
+            points_text = Text(
+                font, f"with {points} point", screen.get_width() / 2, 300
+            )
+        else:
+            points_text = Text(
+                font, f"with {points} points", screen.get_width() / 2, 300
+            )
+
+        quit_btn = Button(
+            font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65
+        )
+
+    else:
+        trombone_sound.play()
+        winner_text = Text(font, f"Game ended in a draw", screen.get_width() / 2, 200)
+        quit_btn = Button(
+            font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65
+        )
+
+    btns = pygame.sprite.Group()
+
+    if points == None:
+        btns.add(winner_text, quit_btn)
+    else:
+        btns.add(winner_text, points_text, quit_btn)
+
+    while True:
+        screen.fill("black")
+        for event in pygame.event.get():
+            match event.type:
+                case pygame.QUIT:
+                    return 0
+                case pygame.MOUSEBUTTONUP:
+                    if quit_btn in btns:
+                        if quit_btn.rect.collidepoint(event.pos):
+                            raise SystemExit
+                            # pygame.quit()
+                            # return 0
+        # draw buttons n text
         btns.draw(screen)
 
         pygame.display.flip()

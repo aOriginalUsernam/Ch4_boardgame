@@ -24,7 +24,7 @@ class GameLoop:
         margin: int,
         cell_amount: int,
         cell_size: int,
-        load_game: bool = False,
+        load_game: bool = False
     ) -> None:
         self.save_path = os.path.join(os.getcwd(), f"data\\save_file.json")
 
@@ -45,6 +45,8 @@ class GameLoop:
         cell_size: int,
     ) -> bool:
         self.clock = clock
+        self.name_player1 = get_names(clock, screen)
+        self.name_player2 = get_names(clock, screen)
         # self.margin = margin
         # self.cell_amount = cell_amount
         self.grid = Grid(cell_size, cell_amount, margin)
@@ -102,7 +104,6 @@ class GameLoop:
         # make current shape
         self.current_shape = self.shape_handler.generate_shape("red")
         self.current_shape.move(int(margin / 2), int(height / 2))
-        print(self.current_shape.__dict__)
 
         # make next shapes
         p1_next_shape = self.shape_handler.generate_shape("red")
@@ -255,7 +256,13 @@ class GameLoop:
             )
             try:
                 if game_over:
-                    raise SystemExit
+                    while True:
+                        if self.points["red"].points > self.points["green"].points:
+                            win_screen(self.clock, screen, self.points["red"].points, self.name_player1)
+                        elif self.points["red"].points < self.points["green"].points:
+                            win_screen(self.clock, screen, self.points["green"].points, self.name_player2)
+                        else:
+                            win_screen(self.clock, screen)
 
                 # if shape is placed generate new shape
                 if self.current_shape.is_placed:
