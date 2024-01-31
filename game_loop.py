@@ -20,16 +20,16 @@ class GameLoop:
         self,
         clock: pygame.time.Clock,
         screen: pygame.display,
-        width_and_height: tuple[int, int],
-        margin: int,
-        cell_amount: int,
-        cell_size: int,
+        width_and_height: tuple[int, int] = [1000, 500],
+        margin: int = 230,
+        cell_amount: int = 10,
+        cell_size: int = 50,
         load_game: bool = False,
     ) -> None:
         self.save_path = os.path.join(os.getcwd(), f"data\\save_file.json")
 
         if load_game:
-            self.load_game(clock, screen, width_and_height)
+            self.load_game(clock, screen)
         else:
             self.start_game(
                 clock, screen, width_and_height, margin, cell_amount, cell_size
@@ -120,7 +120,6 @@ class GameLoop:
         self,
         clock: pygame.time.Clock,
         screen: pygame.display,
-        width_and_height: tuple[int, int],
     ) -> bool:
         try:
             with open(self.save_path, "r") as file:
@@ -132,7 +131,8 @@ class GameLoop:
         except:
             raise SystemExit("no valid safe_file")
         self.clock = clock
-        self.width_and_height = width_and_height
+        self.width_and_height = file_dict["width_and_height"]
+        width_and_height = self.width_and_height
 
         # usefull data
         width = width_and_height[0]
@@ -244,6 +244,7 @@ class GameLoop:
                     "grid": self.grid,
                     "points": self.points,
                     "players": {"red": self.name_player1, "green": self.name_player2},
+                    "width_and_height": self.width_and_height,
                 },
                 file,
                 default=serialize,
