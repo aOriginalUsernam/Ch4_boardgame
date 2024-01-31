@@ -16,15 +16,13 @@ from menu import *
 def __main__() -> None:
     pygame.init()
     try:
-        cell_amount = 10  # int(input("Board size: "))
+        full_screen_size = pyautogui.size()
+        screen = pygame.display.set_mode((full_screen_size[0], full_screen_size[1]))
+        clock = pygame.time.Clock()
         cell_size = 50
         margin = cell_size * 4 + 20
-        width = cell_amount * cell_size + 2 * margin
-        height = cell_amount * cell_size + 2 * margin
-
-        full_screen_size = pyautogui.size()
-        screen = pygame.display.set_mode((width, height))
-        clock = pygame.time.Clock()
+        
+        
 
         # make header
         pygame.display.set_caption("boardgame")
@@ -36,6 +34,10 @@ def __main__() -> None:
         if resp == 0:
             raise SystemExit
         elif resp == 1:
+            cell_amount = get_board_size(clock, screen)
+            width = cell_amount * cell_size + 2 * margin
+            height = cell_amount * cell_size + 2 * margin
+            screen = pygame.display.set_mode((width, height))
             loop = GameLoop(
                 clock, screen, (width, height), margin, cell_amount, cell_size
             )

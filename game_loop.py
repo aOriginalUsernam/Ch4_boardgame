@@ -46,8 +46,10 @@ class GameLoop:
     ) -> bool:
         # set clock, names and grid
         self.clock = clock
-        self.name_player1 = get_names(clock, screen)
-        self.name_player2 = get_names(clock, screen)
+        self.name_player1 = get_names(clock, screen, "Name player one")
+        self.name_player2 = get_names(clock, screen, "Name player two")
+        # self.margin = margin
+        # self.cell_amount = cell_amount
         self.grid = Grid(cell_size, cell_amount, margin)
 
         # draw grid
@@ -278,6 +280,7 @@ class GameLoop:
                             win_screen(
                                 self.clock,
                                 screen,
+                                self.grid.cell_amount,
                                 self.points["red"].points,
                                 self.name_player1,
                             )
@@ -285,11 +288,12 @@ class GameLoop:
                             win_screen(
                                 self.clock,
                                 screen,
+                                self.grid.cell_amount,
                                 self.points["green"].points,
                                 self.name_player2,
                             )
                         else:
-                            win_screen(self.clock, screen)
+                            win_screen(self.clock, screen, self.grid.cell_amount)
 
                 # if shape is placed generate new shape
                 if self.current_shape.is_placed:
