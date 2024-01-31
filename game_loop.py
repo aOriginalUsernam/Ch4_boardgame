@@ -44,14 +44,13 @@ class GameLoop:
         cell_amount: int,
         cell_size: int,
     ) -> bool:
+        # set clock, names and grid
         self.clock = clock
         self.name_player1 = get_names(clock, screen)
         self.name_player2 = get_names(clock, screen)
-        # self.margin = margin
-        # self.cell_amount = cell_amount
         self.grid = Grid(cell_size, cell_amount, margin)
 
-        # grid
+        # draw grid
         self.grid.draw_grid(screen)
         self.width_and_height = width_and_height
         width = width_and_height[0]
@@ -88,29 +87,29 @@ class GameLoop:
 
         # make block + shape handler
         red_block = Block(
-            int(margin / 2),
-            int(height - margin / 2),
-            cell_size - 0.5,
+            self.grid.cell_size + 10,
+            height - margin + self.grid.cell_size + 10,
+            cell_size,
             r_block_img,
         )
         green_block = Block(
-            width - int(margin / 2),
-            int(height - margin / 2),
-            cell_size - 0.5,
+            width - margin + self.grid.cell_size + 10,
+            height - margin + self.grid.cell_size + 10,
+            cell_size,
             g_block_img,
         )
         self.shape_handler = ShapeHandler({"red": red_block, "green": green_block})
 
         # make current shape
         self.current_shape = self.shape_handler.generate_shape("red")
-        self.current_shape.move(int(margin / 2), int(height / 2))
+        self.current_shape.move(self.grid.cell_size, int(height / 2))
 
         # make next shapes
         p1_next_shape = self.shape_handler.generate_shape("red")
 
         p2_next_shape = self.shape_handler.generate_shape("green")
         self.next_shapes = {"red": p1_next_shape, "green": p2_next_shape}
-        
+
         self.is_player_1 = True
 
     def load_game(
@@ -180,15 +179,15 @@ class GameLoop:
 
         # make block + shape handler
         red_block = Block(
-            int(margin / 2),
-            int(height - margin / 2),
-            cell_size - 0.5,
+            self.grid.cell_size + 10,
+            height - margin + self.grid.cell_size + 10,
+            cell_size,
             r_block_img,
         )
         green_block = Block(
-            width - int(margin / 2),
-            int(height - margin / 2),
-            cell_size - 0.5,
+            width - margin + self.grid.cell_size + 10,
+            height - margin + self.grid.cell_size + 10,
+            cell_size,
             g_block_img,
         )
         self.shape_handler = ShapeHandler({"red": red_block, "green": green_block})
@@ -290,7 +289,9 @@ class GameLoop:
                         self.points["red"].add_points(self.current_shape.shape, density)
                         self.current_shape = self.next_shapes["green"]
                         self.current_shape.move(
-                            self.width_and_height[0] - 40,
+                            self.width_and_height[0]
+                            - self.grid.margin
+                            + self.grid.cell_size,
                             int(self.width_and_height[1] / 2),
                         )
                         self.next_shapes["green"] = self.shape_handler.generate_shape(
@@ -302,7 +303,9 @@ class GameLoop:
                             self.current_shape.shape, density
                         )
                         self.current_shape = self.next_shapes["red"]
-                        self.current_shape.move(40, int(self.width_and_height[1] / 2))
+                        self.current_shape.move(
+                            self.grid.cell_size, int(self.width_and_height[1] / 2)
+                        )
                         self.next_shapes["red"] = self.shape_handler.generate_shape(
                             "red"
                         )
