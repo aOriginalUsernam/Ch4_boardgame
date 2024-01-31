@@ -237,6 +237,11 @@ class GameLoop:
             )
 
     def play_game(self, screen: pygame.surface) -> tuple:
+        # music
+        pygame.mixer.music.load(os.path.join(os.getcwd(), "sounds\\Tetris.mp3"))
+        pygame.mixer.music.set_volume(0.05)
+        pygame.mixer.music.play(-1)
+
         # main game loop
         game_over = False
         is_dragging_shape = False
