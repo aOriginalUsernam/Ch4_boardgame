@@ -59,7 +59,7 @@ class GameLoop:
         height = width_and_height[1]
         # make timer
         font = pygame.font.Font(None, 36)
-        timer = Timer(font, int(width / 2), 36 / 2, 2)
+        timer = Timer(font, int(width / 2), 36 / 2, 15)
         self.timer = timer
 
         # points
