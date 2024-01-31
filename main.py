@@ -21,8 +21,6 @@ def __main__() -> None:
         clock = pygame.time.Clock()
         cell_size = 50
         margin = cell_size * 4 + 20
-        
-        
 
         # make header
         pygame.display.set_caption("boardgame")
@@ -42,9 +40,7 @@ def __main__() -> None:
                 clock, screen, (width, height), margin, cell_amount, cell_size
             )
         elif resp == 2:
-            loop = GameLoop(
-                clock, screen, (width, height), margin, cell_amount, cell_size, True
-            )
+            loop = GameLoop(clock, screen, load_game=True)
         # run game
         resp = loop.play_game(screen)
         pass

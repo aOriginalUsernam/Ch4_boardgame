@@ -130,9 +130,15 @@ class GameLoop:
                 file_points = file_dict["points"]
         except:
             raise SystemExit("no valid safe_file")
+
         self.clock = clock
         self.width_and_height = file_dict["width_and_height"]
         width_and_height = self.width_and_height
+
+        # set screen
+        screen = screen = pygame.display.set_mode(
+            (width_and_height[0], width_and_height[1])
+        )
 
         # usefull data
         width = width_and_height[0]
