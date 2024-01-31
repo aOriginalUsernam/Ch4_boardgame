@@ -1,4 +1,5 @@
 import pygame
+from text import Text
 
 
 class Board:
@@ -7,8 +8,8 @@ class Board:
     ):
         self.color = color
         rgb = [color.r, color.g, color.b]
-        if color.r < 235:
-            rgb[0] = color.r + 15
+        if color.r < 230:
+            rgb[0] = color.r + 20
         if color.g > 5:
             rgb[1] = color.g - 5
         if color.b > 5:
@@ -16,6 +17,13 @@ class Board:
         self.next_shape_color = pygame.Color(rgb)
         self.tot_board = pygame.Rect(left, top, width, height)
         self.next_shape_board = pygame.Rect(left, height - width, width, height)
+        self.text = Text(
+            pygame.font.SysFont("Georgia", 20, bold=True),
+            "NEXT SHAPE:",
+            left,
+            height - width - 20,
+        )
+        self.text.rect.centerx = left + width / 2
 
     def draw(self, screen: pygame.surface):
         pygame.draw.rect(screen, self.color, self.tot_board)

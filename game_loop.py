@@ -98,7 +98,9 @@ class GameLoop:
             cell_size,
             g_block_img,
         )
-        self.shape_handler = ShapeHandler({"red": red_block, "green": green_block})
+        self.shape_handler = ShapeHandler(
+            {"red": red_block, "green": green_block}, int(margin - cell_size / 2)
+        )
 
         # make current shape
         self.current_shape = self.shape_handler.generate_shape("red")
@@ -190,7 +192,9 @@ class GameLoop:
             cell_size,
             g_block_img,
         )
-        self.shape_handler = ShapeHandler({"red": red_block, "green": green_block})
+        self.shape_handler = ShapeHandler(
+            {"red": red_block, "green": green_block}, int(margin - cell_size / 2)
+        )
 
         # generate shapes
         self.next_shapes = {}
@@ -259,7 +263,12 @@ class GameLoop:
 
         while True:
             texts = pygame.sprite.Group(
-                self.rotate_img, self.timer, self.points["red"], self.points["green"]
+                self.rotate_img,
+                self.timer,
+                self.points["red"],
+                self.points["green"],
+                self.boards[0].text,
+                self.boards[1].text,
             )
             try:
                 if game_over:
