@@ -24,13 +24,9 @@ class GameLoop:
         margin: int,
         cell_amount: int,
         cell_size: int,
-        name_player1,
-        name_player2,
         load_game: bool = False
     ) -> None:
         self.save_path = os.path.join(os.getcwd(), f"data\\save_file.json")
-        self.name_player1 = name_player1
-        self.name_player2 = name_player2
 
         if load_game:
             self.load_game(clock, screen, width_and_height)
@@ -49,6 +45,8 @@ class GameLoop:
         cell_size: int,
     ) -> bool:
         self.clock = clock
+        self.name_player1 = get_names(clock, screen)
+        self.name_player2 = get_names(clock, screen)
         # self.margin = margin
         # self.cell_amount = cell_amount
         self.grid = Grid(cell_size, cell_amount, margin)
@@ -60,7 +58,7 @@ class GameLoop:
         height = width_and_height[1]
         # make timer
         font = pygame.font.Font(None, 36)
-        timer = Timer(font, int(width / 2), 36 / 2, 3)
+        timer = Timer(font, int(width / 2), 36 / 2, 15)
         self.timer = timer
 
         # points
@@ -255,9 +253,11 @@ class GameLoop:
                 if game_over:
                     while True:
                         if self.points["red"].points > self.points["green"].points:
-                            win_screen(self.clock, screen, self.name_player1)
+                            win_screen(self.clock, screen, self.points["red"].points, self.name_player1)
+                        elif self.points["red"].points < self.points["green"].points:
+                            win_screen(self.clock, screen, self.points["green"].points, self.name_player2)
                         else:
-                            win_screen(self.clock, screen, self.name_player2)
+                            win_screen(self.clock, screen)
 
                 # if shape is placed generate new shape
                 if self.current_shape.is_placed:

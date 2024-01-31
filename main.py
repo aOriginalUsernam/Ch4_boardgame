@@ -36,14 +36,13 @@ def __main__() -> None:
         if resp == 0:
             raise SystemExit
         elif resp == 1:
-            name_player1 = get_names(clock, screen)
-            name_player2 = get_names(clock, screen)
+            
             loop = GameLoop(
-                clock, screen, (width, height), margin, cell_amount, cell_size, name_player1, name_player2
+                clock, screen, (width, height), margin, cell_amount, cell_size
             )
         elif resp == 2:
             loop = GameLoop(
-                clock, screen, (width, height), margin, cell_amount, cell_size, name_player1, name_player2, True
+                clock, screen, (width, height), margin, cell_amount, cell_size, True
             )
         # run game
         resp = loop.play_game(screen)

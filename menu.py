@@ -90,18 +90,36 @@ def pause_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface) -> in
         pygame.display.flip()
         clock.tick(15)
 
-def win_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface, winner: str) -> int:
-    # make buttons
+def win_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface, points=None, winner=None) -> int:
+    yay_sound = pygame.mixer.Sound(os.path.join(os.getcwd(), "sounds\\yay.mp3"))
+    trombone_sound = pygame.mixer.Sound(os.path.join(os.getcwd(), "sounds\\trombone.mp3"))
+
     font = pygame.font.SysFont("Georgia", 80, bold=True)
 
-    # start button
-    winner = Text(font, f"Winner is {winner}", screen.get_width() / 2, 200)
+    # checks if its a draw or not
+    if winner != None:
+        yay_sound.play()
+        winner_text = Text(font, f"Winner is {winner}", screen.get_width() / 2, 200)
 
-    # quit button
-    quit_btn = Button(font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65)
+        if points == 1:
+            points_text = Text(font, f"with {points} point", screen.get_width() / 2, 300)
+        else:
+            points_text = Text(font, f"with {points} points", screen.get_width() / 2, 300)
+
+        quit_btn = Button(font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65)
+
+    else:
+        trombone_sound.play()
+        winner_text = Text(font, f"Game ended in a draw", screen.get_width() / 2, 200)
+        quit_btn = Button(font, "QUIT", screen.get_width() / 2, screen.get_height() / 100 * 65)
 
     btns = pygame.sprite.Group()
-    btns.add(winner, quit_btn)
+
+    if points == None:
+        btns.add(winner_text, quit_btn)
+    else:
+        btns.add(winner_text, points_text, quit_btn)
+
     while True:
         screen.fill("black")
         for event in pygame.event.get():
@@ -111,9 +129,10 @@ def win_screen(clock: pygame.time.Clock, screen: pygame.surface.Surface, winner:
                 case pygame.MOUSEBUTTONUP:
                     if quit_btn in btns:
                         if quit_btn.rect.collidepoint(event.pos):
-                            pygame.quit()
-                            return 0
-        # draw start buttons
+                            raise SystemExit
+                            # pygame.quit()
+                            # return 0
+        # draw buttons n text
         btns.draw(screen)
 
         pygame.display.flip()
