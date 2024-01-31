@@ -1,0 +1,30 @@
+date,activity,time_spent,details
+22-01-2024, made github repo,0.5h,making github repo and initial files also link to me and Levi's device
+22-01-2024,epic discord meeting,0.5h,meeting with Levi on our expectations of the game
+22-01-2024, added game main flow,1.0h, added the pygame recomended game flow
+22-01-2024, making shape,2.0h, created shape object created block object
+22-01-2024, added 3 extra shapes,0.5h, added some extra shapes
+23-01-2024, fixed shapes,0.5h, some shapes crashed before or did not snap/move properly
+23-01-2024, added shapehandler + shapes enum,2h, added shapehandler to keep track shapes + shapes enum to easily id shapes
+23-01-2024, added shape randomiser, 1h, shapehandler now randomises created shapes
+23-01-2024, added player 2, 1h, we added a second player
+23-01-2024, added timer object,1h, I added a timer object to keep track of time and throw error whaen time is up
+23-01-2024, helped with grid snap, 0.5h, hepled Levi with his complex grid snap.
+24-01-2024, added next item logic, 2.5h, took way to long but the game kept crashing. you can now see your next item
+24-01-2024, created board object, 1.5h, created a board object to house shapes that are not placed insde the grid.
+24-01-2024, started moving game code to gameloop, 1h, to safe and load game easily we need to move our main game logic to another file -> many crashes :(
+25-01-2024, nothing, 0h, work
+26-01-2024, nothing, 0h, nothing
+27-01-2024, nothing, 0h, nothing
+28-01-2024, almost finished move, 1.0h, merged with new code of Levi. did not have much time today
+29-01-2024, all code from main is now in gameloop file, 0.5h, finaly...
+29-01-2024, added save game functionality, 2.0h, took a lot of time trying to figure out how json works (again :p)
+29-01-2024, fixed isue's, 1.0h, fixed isue's in safe game function and points object
+30-01-2024, added load game function, 3.5h, after endless bugs you can now load the safefile. yay
+31-01-2024, updated load+ safe game, 1.5h, afer merge with Levi load game did not work anymore. fixed it
+31-01-2024, added spacing shapes, 2.0h, shapes no longer go outside the screen
+31-01-2024, made screen dynamic with Levi, 2.0h, made our game dynamic by being able to change amount of grids
+31-01-2024, fixed shape pos in grid, 1.0h, I broke the isvalid grid check so I fixed it again
+31-01-2024, gues what load game is dead again, 1.0h, plz no break again danku
+
+31-01-2024, submit game, 31h, <- total time of creating game
